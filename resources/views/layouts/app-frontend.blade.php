@@ -31,7 +31,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="{{route('home-fe')}}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('product-fe')}}">Product</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('project-fe')}}">Project</a></li>
                 <li class="nav-item"><a class="nav-link" href="#news">News</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
@@ -49,6 +49,7 @@
                 <input type="text" class="form-control" placeholder="Full Name">
                 <input type="email" class="form-control" placeholder="Email Address">
                 <textarea class="form-control" placeholder="Message"></textarea>
+                <input id="signup-token" name="_token" type="hidden" value="{{csrf_token()}}">
             </div>
             <div class="col-lg-6">
                 <div class="row">
@@ -96,11 +97,12 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="{{asset('assets/frontend/js/jquery-3.3.1.slim.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js">
 <script src="{{asset('assets/frontend/js/popper.min.js')}}"></script>
 <script src="{{asset('assets/frontend/js/bootstrap.min.js')}}"></script>
 <!-- owl carousel js-->
 <script src="{{asset('assets/frontend/owl-carousel/owl.carousel.min.js')}}"></script>
 <script src="{{asset('assets/frontend/js/main.js')}}"></script>
+@yield('js')
 </body>
 </html>

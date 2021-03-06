@@ -67,6 +67,8 @@
                   <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Expertise</th>
+                    <th>Instansi</th>
                     <th>Option</th>
                   </tr>
                 </thead>
@@ -74,17 +76,26 @@
                   <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Expertise</th>
+                    <th>Instansi</th>
                     <th>Option</th>
                   </tr>
                 </tfoot>
                 <tbody>
                     @foreach ($projects as $project)
                     @php
+                        $exp = '';
                         $description = substr($project->description, 0, 30);
+                        foreach($project->expertise as $item){
+                            $exp = $exp.$item->name.',';
+                        }
+                        $exp = substr($exp, 0, -1);
                     @endphp
                         <tr>
                             <td onclick="show({{$project->id_project}},'show')">{{$project->name}}</td>
                             <td onclick="show({{$project->id_project}},'show')">{{$description}}.....</td>
+                            <td onclick="show({{$project->id_project}},'show')">{{$exp}}</td>
+                            <td onclick="show({{$project->id_project}},'show')">{{$project->instansi}}</td>
                             <td><button type="button" class="btn btn-primary btn-sm" onclick="show({{$project->id_project}},'show')"><i class="fas fa-eye"></i></button>
                                 <button type="button" class="btn btn-warning btn-sm" onclick="show({{$project->id_project}},'edit')"><i class="fas fa-pen"></i></button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="deleteProject({{$project->id_project}})"><i class="fas fa-trash"></i></button></td>
@@ -123,13 +134,17 @@
                   <textarea class="form-control" id="project-description" rows="3" name="description" value="{{old('description')}}"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="project-description">Project Description</label>
+                    <label for="project-description">Project Expertise</label>
                     <select class="selectpicker form-control" multiple data-live-search="true" id="project-expertise" rows="3" name="expertise[]" value="{{old('expertise')}}">
                         @foreach ($expertises as $expertise)
                             <option value="{{$expertise->id_expertise}}">{{$expertise->name}}</option>
                         @endforeach
                     </select>
-                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="project-instansi">Project Instansi</label>
+                  <input type="text" class="form-control" id="project-instansi" name="instansi" value="{{old('instansi')}}">
+                </div>
                 <div class="form-group">
                     <label for="project-image">Project Image</label>
                     <input type="file" class="form-control-file" id="project-image" name="image">
@@ -163,6 +178,14 @@
                 <div class="form-group">
                   <label for="project-description">Project Description</label>
                   <textarea class="form-control" id="show-project-description" rows="3" readonly></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="show-project-expertise">Project Expertise</label>
+                  <input type="text" class="form-control" id="show-project-expertise" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="show-project-instansi">Project Instansi</label>
+                  <input type="text" class="form-control" id="show-project-instansi" readonly>
                 </div>
                 <div class="form-group">
                     <label for="project-image">Project Image</label>
@@ -201,13 +224,17 @@
                   <textarea class="form-control" id="edit-project-description" rows="3" name="description"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="edit-project-description">Project Description</label>
+                    <label for="edit-project-description">Project Expertise</label>
                     <select class="selectpicker form-control" multiple data-live-search="true" id="edit-project-expertise" rows="3" name="expertise[]" value="">
                         @foreach ($expertises as $expertise)
                             <option value="{{$expertise->id_expertise}}">{{$expertise->name}}</option>
                         @endforeach
                     </select>
                   </div>
+                <div class="form-group">
+                  <label for="project-instansi">Project Instansi</label>
+                  <input type="text" class="form-control" id="edit-project-instansi" name="instansi">
+                </div>
                 <div class="form-group">
                     <label for="project-image">Project Image</label>
                     <input type="file" class="form-control-file" id="edit-project-image" name="image">
@@ -278,13 +305,16 @@
                         $("#show-project-url").val(result.project['url']);
                         $('#show-project-description').val(result.project['description']);
                         $("#show-project-image").attr("src", "/"+result.project['image']);
+                        $("#show-project-expertise").val(result.expertises);
+                        $("#show-project-instansi").val(result.project['instansi']);
                         $('#showProject').modal('show');
+                        console.log(result.project);
                     }else{
                         $("#edit-project-name").val(result.project['name']);
                         $("#edit-project-url").val(result.project['url']);
                         $('#edit-project-description').val(result.project['description']);
                         $('#edit-project-expertise').val(result.expertise);
-                        console.log(result.expertise);
+                        $("#edit-project-instansi").val(result.project['instansi']);
                         $("#edit-form-project").attr("action", "project/"+result.project['id_project']);
                         $('#editProject').modal('show');
                     }                   

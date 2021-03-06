@@ -75,6 +75,12 @@
           <span>Project</span></a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('blog')}}">
+          <i class="fas fa-fw fa-blog"></i>
+          <span>Blog</span></a>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 

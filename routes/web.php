@@ -18,7 +18,8 @@ Route::get('/', function () {
 })->name('home-fe');
 
 Route::get('/product', 'FrontendController@product')->name('product-fe');
-
+Route::get('/project', 'FrontendController@project')->name('project-fe');
+Route::get('/filter/{id}', 'FrontendController@showExpertise')->name('filter');
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('home');
@@ -39,3 +40,13 @@ Route::post('/admin/project/store', 'ProjectController@store')->name('project.st
 Route::get('/admin/project/{id}/edit', 'ProjectController@edit')->name('project.edit');
 Route::put('/admin/project/{id}', 'ProjectController@update')->name('project.update');
 Route::delete('/admin/project/{id}', 'ProjectController@destroy')->name('project.destroy');
+
+Route::get('/admin/blog', 'BlogController@index')->name('blog');
+Route::get('/admin/blog/create', 'BlogController@create')->name('blog.create');
+Route::post('/admin/blog/store', 'BlogController@store')->name('blog.store');
+Route::get('/admin/blog/show/{id}', 'BlogController@show')->name('blog.show');
+Route::get('/admin/blog/{id}/edit', 'BlogController@edit')->name('blog.edit');
+Route::put('/admin/blog/{id}', 'BlogController@update')->name('blog.update');
+
+Route::post('/admin/blog/category/store', 'BlogCategoryController@store')->name('blog_category.store');
+Route::post('/admin/kategori', 'BlogCategoryController@store')->name('kategori');

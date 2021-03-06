@@ -17,7 +17,7 @@ class ProjectController extends Controller
     }
 
     public function index(){
-        $projects = Project::all();
+        $projects = Project::with('expertise')->get();
         $expertises = Expertise::all();
         return view('admin.project',compact('projects','expertises'));
     }
@@ -27,6 +27,7 @@ class ProjectController extends Controller
             'name' => 'required|min:3',
             'description' => 'required|min:8',
             'expertise' =>'required',
+            'instansi' =>'required',
             'image' => 'required|image'
         ]);
 
@@ -37,6 +38,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->name = $request->name;
         $project->description = $request->description;
+        $project->instansi = $request->instansi;
         $image = $request->file('image');
         $imageLocation = "assets/image/project";
         $imageName = $image->getClientOriginalName();
@@ -55,21 +57,28 @@ class ProjectController extends Controller
     }
 
     public function edit($id){
-        $project = Project::find($id);
+        $project = Project::with('expertise')->find($id);
         $expertise = DEP::where('id_project','=',$id)->get();
+        $expertises = '';
+        foreach($project->expertise as $item){
+            $expertises = $expertises.$item->name.',';
+        }
+        $expertises = substr($expertises, 0, -1);
         $arrexpertise = [];
 
         foreach($expertise as $item){
             array_push($arrexpertise,$item->id_expertise);
         }
 
-        return response()->json(['success' => 'Berhasil', 'project' => $project, 'expertise' => $arrexpertise]);
+        return response()->json(['success' => 'Berhasil', 'project' => $project, 'expertise' => $arrexpertise, 'expertises' => $expertises]);
     }
 
     public function update($id, Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'description' => 'required|min:8',
+            'expertise' =>'required',
+            'instansi' =>'required',
             'image' => 'image'
         ]);
 
@@ -78,9 +87,11 @@ class ProjectController extends Controller
         }
 
         $project = Project::find($id);
+        $deletedExpertises = DEP::where('id_project',$id)->delete();
 
         $project->name = $request->name;
         $project->description = $request->description;
+        $project->instansi = $request->instansi;
         if($request->image != null){
             $oldImage = $project->image;
             File::delete($oldImage);
@@ -91,6 +102,13 @@ class ProjectController extends Controller
             $image->move($imageLocation, $project->image);
         }
         $project->save();
+
+        foreach($request->expertise as $id_expertise){
+            $dep = new DEP;
+            $dep->id_project = $project->id_project;
+            $dep->id_expertise = $id_expertise;
+            $dep->save();
+        }
 
         return back()->with('statusInput', 'project successfully edited');
     }
