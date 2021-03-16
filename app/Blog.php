@@ -11,4 +11,8 @@ class Blog extends Model
     
     protected $table = 'tb_blog';
     protected $primaryKey = 'id_blog';
+
+    public function category(){
+        return $this->belongsTo('App\BlogCategory', 'id_blog_category');
+    }
 }

@@ -75,10 +75,24 @@
           <span>Project</span></a>
       </li>
 
+      <!-- Nav Item - Project -->
       <li class="nav-item">
-        <a class="nav-link" href="{{route('blog')}}">
+        <a class="nav-link" href="{{route('project_trial')}}">
+          <i class="fas fa-fw fa-object-group"></i>
+          <span>Project Trial</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('blog')}}" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-blog"></i>
-          <span>Blog</span></a>
+          <span>News</span></a>
+          <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">News Component:</h6>
+              <a class="collapse-item" href="{{route('blog_category')}}">News Category</a>
+              <a class="collapse-item" href="{{route('blog')}}">News</a>
+            </div>
+          </div>
       </li>
 
       <!-- Divider -->

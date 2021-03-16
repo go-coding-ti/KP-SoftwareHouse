@@ -18,7 +18,7 @@ class BlogController extends Controller
     }
     
     public function index(){
-        $blogs = Blog::all();
+        $blogs = Blog::with('category')->get();
         return view('admin.blog.index', compact('blogs'));
     }
 
@@ -31,7 +31,8 @@ class BlogController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3',
             'content' => 'required|min:8',
-            'image' => 'required|image'
+            'image' => 'required|image',
+            'id_blog_category' => 'required'
         ]);
 
         if($validator->fails()){
@@ -42,6 +43,8 @@ class BlogController extends Controller
 
         $blog = new Blog;
         $blog->title = $request->title;
+        $blog->status = 1;
+        $blog->id_blog_category = $request->id_blog_category;
         $image = $request->file('image');
         $imageLocation = "assets/image/blog/thumbnail";
         $imageName = $image->getClientOriginalName();
@@ -89,15 +92,17 @@ class BlogController extends Controller
     }
 
     public function edit($id){
-        $blog = Blog::find($id);
-        return view('admin.blog.edit', compact('blog'));
+        $blog = Blog::with('category')->find($id);
+        $blogCategories = BlogCategory::all();
+        return view('admin.blog.edit', compact('blog', 'blogCategories'));
     }
 
     public function update($id, Request $request){
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3',
             'content' => 'required|min:8',
-            'image' => 'image'
+            'image' => 'image',
+            'id_blog_category' => 'required'
         ]);
 
         if($validator->fails()){
@@ -119,6 +124,7 @@ class BlogController extends Controller
         }
 
         $blog->title = $request->title;
+        $blog->id_blog_category = $request->id_blog_category;
         $blogImage = BlogImage::where('id_blog','=', $id)->get();
         
         $detail = $request->content;
@@ -181,5 +187,23 @@ class BlogController extends Controller
         }
         
         return redirect(route('blog'));
+    }
+
+    public function status($id){
+        $blog = Blog::find($id);
+        if($blog->status == 1){
+            $blog->status = 0;
+        }else{
+            $blog->status = 1;
+        }
+
+        $blog->save();
+        return response()->json(['success' => 'berhasil terganti']);
+    }
+
+    public function destroy($id){
+        $blog = Blog::find($id);
+        $blog->delete();
+        return back()->with(['statusInput' => 'Successfully delete news']);
     }
 }

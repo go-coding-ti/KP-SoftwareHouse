@@ -76,7 +76,7 @@ body {
 #gtco-main-nav .bar1, #gtco-main-nav .bar2, #gtco-main-nav .bar3 {
   width: 25px;
   height: 2px;
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   margin: 5px 0;
   transition: 0.4s;
   display: block;
@@ -96,7 +96,8 @@ body {
 #gtco-main-nav .navbar-nav li a {
   font-family: "OpenSans-Regular";
   font-size: 18px;
-  color: #666666;
+  color: rgb(80, 80, 80);
+  font-weight: 900;
   padding: 5px 15px !important;
   text-transform: uppercase;
 }

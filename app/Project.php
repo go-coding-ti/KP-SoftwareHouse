@@ -14,4 +14,8 @@ class Project extends Model
     public function expertise(){
         return $this->belongsToMany('App\Expertise', 'tb_detail_expertise', 'id_project', 'id_expertise')->withPivot('id_detail_expertise');
     }
+
+    public function trial(){
+        return $this->hasMany('App\ProjectTrial', 'id_project');
+    }
 }

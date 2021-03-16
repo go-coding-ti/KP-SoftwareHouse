@@ -47,7 +47,7 @@
     <div class="row">
 
       <!-- Area Chart -->
-      <div class="col-xl-8 col-lg-6">
+      <div class="col-xl-12 col-lg-6">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -62,6 +62,15 @@
                     <input type="text" class="form-control" id="title" name="title">
                 </div>
                 <div class="form-group">
+                    <label for="blog_category_name">Category</label>
+                    <select class="selectpicker form-control" data-live-search="true" id="blog_category_name" rows="3" name="id_blog_category" value="{{old('id_blog_category')}}">
+                      <option value="">Select News Category</option>
+                        @foreach ($blogCategories as $blogCategory)
+                            <option value="{{$blogCategory->id_blog_category}}">{{$blogCategory->name}}</option>
+                        @endforeach
+                    </select>  
+                </div>
+                <div class="form-group">
                     <label for="image">Thumbnail</label>
                     <input type="file" class="form-control-file" id="image" name="image">
                 </div>
@@ -70,39 +79,12 @@
                     <textarea id="content" class="summernote" name="content"></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="submit">
+                    <input type="submit" class="btn btn-primary" value="Submit">
                 </div>
             </form>                 
           </div>
         </div>
       </div>
-
-      <div class="col-xl-4 col-lg-6">
-        <div class="card shadow mb-4">
-          <!-- Card Header - Dropdown -->
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Component Articel</h6>
-          </div>
-          <!-- Card Body -->
-          <div class="card-body">
-            <a href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addBlogCategory">
-                <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                </span>
-                <span class="text">Add Category</span>
-            </a>
-            <div class="form-group mt-4 ganti">
-              <label for="blog_category_name">Category</label>
-                <select class="selectpicker form-control" multiple data-live-search="true" id="blog_category_name" rows="3" name="blogCategory[]" value="{{old('blogCategory')}}">
-                    @foreach ($blogCategories as $blogCategory)
-                        <option value="{{$blogCategory->id_blog_category}}">{{$blogCategory->name}}</option>
-                    @endforeach
-                </select>
-          </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 </div>
 
@@ -145,7 +127,8 @@
             height: 350, // set editor height
             minHeight: null, // set minimum height of editor
             maxHeight: null, // set maximum height of editor
-            focus: false // set focus to editable area after initializing summernote
+            focus: false, // set focus to editable area after initializing summernote
+            maximumImageFileSize: 2097152
         });
 
         $('#blog_category-name').selectpicker();

@@ -2,6 +2,7 @@
 
 @push('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
 @endpush
 
 @section('content')
@@ -61,6 +62,21 @@
                     <input type="text" class="form-control" id="title" name="title" value="{{$blog->title}}">
                 </div>
                 <div class="form-group">
+                  <label for="blog_category_name">Category</label>
+                  <select class="selectpicker form-control" data-live-search="true" id="blog_category_name" rows="3" name="id_blog_category" @if ($blog->category)
+                    value="{{$blog->category->name}}"
+                  @else
+                      value=""
+                  @endif>
+                    <option value="">Select News Category</option>
+                      @foreach ($blogCategories as $blogCategory)
+                          <option value="{{$blogCategory->id_blog_category}}" @if ($blogCategory->id_blog_category == $blog->id_blog_category)
+                            selected
+                          @endif>{{$blogCategory->name}}</option>
+                      @endforeach
+                  </select>  
+              </div>
+                <div class="form-group">
                     <label for="image">Thumbnail</label>
                     <img style="max-height: 350px; max-width: 400px" src="{{asset($blog->image)}}" alt="">
                     <input type="file" class="form-control-file" id="image" name="image">
@@ -70,7 +86,7 @@
                     <textarea id="content" class="summernote" name="content">{!! $blog->content !!}</textarea>
                 </div>
                 <div class="form-group">
-                    <input type="submit">
+                    <input type="submit" class="btn btn-primary" value="Submit">
                 </div>
             </form>                 
           </div>
@@ -86,6 +102,8 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
 <script>
     $(document).ready(function(e){
         var status;
@@ -95,6 +113,8 @@
             maxHeight: null, // set maximum height of editor
             focus: false // set focus to editable area after initializing summernote
         });
+
+        $('#blog_category-name').selectpicker();
     });
 </script>
 @endsection

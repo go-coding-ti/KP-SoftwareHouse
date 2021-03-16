@@ -32,7 +32,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{route('home-fe')}}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('product-fe')}}">Product</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('project-fe')}}">Project</a></li>
-                <li class="nav-item"><a class="nav-link" href="#news">News</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('demo')}}">Demo Project</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('news')}}">News</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
         </div>
