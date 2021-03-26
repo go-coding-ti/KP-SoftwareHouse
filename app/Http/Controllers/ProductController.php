@@ -85,5 +85,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->delete();
         return redirect(route('product'));
+
+        return back()->with('statusInput', 'Product successfully deleted');
     }
 }

@@ -8,9 +8,11 @@ use App\Project;
 use App\Expertise;
 use App\ProjectTrial;
 use App\Blog;
+Use App\GlobalFunction;
 
 class FrontendController extends Controller
 {
+    private $idx;
     public function product(){
         $products = Product::all();
         return view('frontend.product',compact('products'));
@@ -28,27 +30,33 @@ class FrontendController extends Controller
         }else if($id < 100){
             $expertises = Expertise::with('project')->where('id_expertise',$id)->first();
             $projects = $expertises->project;
+        }else if($id == 100){
+            $trials = ProjectTrial::with('project')->get();
         }else{
-            // $id = $id - 100;
-            // $projects = App\ProjectTrial::with(['project' => function($q){
-            //     $q->with(['expertise' => function($qq){
-            //         $qq->where('tb_expertise.id_expertise',$id);
-            //     }]);
-            // }])->get();
+            $id = $id - 100;
+            $this->idx = $id;
 
-            // $projects = App\Expertise::with(['project' => function($q){
-            //     return $q->with('trial');
-            // }])->where('id_expertise',$id)->get();
-            // $projects = $projects
+            $trials = ProjectTrial::with('project')->whereHas('project',function($q){
+                return $q->whereHas('expertise',function($qq){
+                    return $qq->where('tb_detail_expertise.id_expertise',$this->idx);
+                });
+            })->get();
+
+            $id = $id+100;
         }
 
-        $result = view('frontend.showExpertise', compact('projects'))->render();
+        if($id < 99){
+            $result = view('frontend.showExpertise', compact('projects'))->render();
+        }else{
+            $result = view('frontend.showExpertiseTrial', compact('trials'))->render();
+        }
 
         return response()->json(['success' => 'berhasil', 'view' => $result]);
     }
 
     public function trial(){
-        $trials = ProjectTrial::with('project.expertise')->get();
+        $this->idx = 2;
+        $trials = ProjectTrial::with('project')->get();
         $expertises = Expertise::all();
         return view('frontend.project_trial', compact('trials','expertises'));
     }
@@ -63,7 +71,7 @@ class FrontendController extends Controller
     }
 
     public function blogShow($kategori,$judul){
-        $category = $kategori;
+        $judul = GlobalFunction::spaceChange(2,$judul);
         
         $blog = Blog::with('category')->where('title', $judul)->first();
 

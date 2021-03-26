@@ -25,10 +25,14 @@
             <div class="col-4">
                 <img style="max-height:250px" class="card-img-top" src="{{$blog->image}}" alt="">
             </div>
+            @php
+                $kategori = \App\GlobalFunction::spaceChange(1,$blog->category->name);
+                $judul = \App\GlobalFunction::spaceChange(1,$blog->title);
+            @endphp
             <div class="col-6">
                 <h2 font-weight-bold>{{$blog->title}}</h2>
                 <p class="card-text">{{$blog->content}}</p>
-                <a href="{{route('blog_show', ['kategori' => $blog->category->name, 'judul' => $blog->title])}}">Read More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="{{route('blog_show', ['kategori' => $kategori, 'judul' => $judul])}}">Read More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
             </div>
         </div>
         @endforeach

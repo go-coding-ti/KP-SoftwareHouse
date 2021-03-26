@@ -47,8 +47,9 @@
 @section('js')
 <script>
     function filter(id_expertise){
+        var id = id_expertise+100;
         jQuery.ajax({
-                url: "/filter/"+id_expertise,
+                url: "/filter/"+id,
                 method: 'get',
                 success: function(result){
                     $('.ganti').html(result.view);

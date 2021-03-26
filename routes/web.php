@@ -67,3 +67,13 @@ Route::post('/admin/project/trial/store', 'ProjectTrialController@store')->name(
 Route::get('/admin/project/trial/{id}/edit', 'ProjectTrialController@edit')->name('project_trial.edit');
 Route::put('/admin/project/trial/{id}', 'ProjectTrialController@update')->name('project_trial.update');
 Route::delete('/admin/project/trial/{id}', 'ProjectTrialController@destroy')->name('project_trial.destroy');
+
+Route::get('/admin/preference', 'PreferenceController@index')->name('preference');
+Route::post('/admin/preference/store', 'PreferenceController@store')->name('preference.store');
+
+Route::get('/admin/social-media', 'SocialMediaController@index')->name('social-media');
+Route::get('/admin/social-media/{id}/edit', 'SocialMediaController@edit')->name('social-media.edit');
+Route::post('/admin/social-media/store', 'SocialMediaController@store')->name('social-media.store');
+Route::put('/admin/social-media/{id}', 'SocialMediaController@update')->name('social-media.update');
+
+Route::delete('/admin/social-media/{id}', 'SocialMediaController@destroy')->name('social-media.destroy');

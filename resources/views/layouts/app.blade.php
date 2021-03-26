@@ -95,6 +95,19 @@
           </div>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('preference')}}" data-toggle="collapse" data-target="#collapSetting" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Settings</span></a>
+          <div id="collapSetting" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Settings Component:</h6>
+              <a class="collapse-item" href="{{route('preference')}}">Preference</a>
+              <a class="collapse-item" href="{{route('social-media')}}">Social Media</a>
+            </div>
+          </div>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
