@@ -10,7 +10,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Product</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -120,16 +119,20 @@
             <form method="post" action="{{route('product.insert')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <label for="product-name">Procut Name</label>
+                  <label for="product-name">Product Name</label>
                   <input type="text" class="form-control" id="product-name" name="title" value="{{old('title')}}">
                 </div>
                 <div class="form-group">
-                    <label for="product-url">Procut URL</label>
+                    <label for="product-url">Product URL</label>
                     <input type="text" class="form-control" id="product-url" name="url" value="{{old('url')}}">
                   </div>
                 <div class="form-group">
-                  <label for="product-description">Product Description</label>
+                  <label for="product-description">Product Description *ina</label>
                   <textarea class="form-control" id="product-description" rows="3" name="description" value="{{old('description')}}"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="product-description-eng">Product Description *eng</label>
+                  <textarea class="form-control" id="product-description-eng" rows="3" name="description_en" value="{{old('description_eng')}}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="product-image">Product Image</label>
@@ -158,20 +161,24 @@
         </div>
         <div class="modal-body">
                 <div class="form-group">
-                  <label for="product-name">Procut Name</label>
+                  <label for="product-name">Product Name</label>
                   <input type="text" class="form-control" id="show-product-name" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="product-url">Procut URL</label>
+                    <label for="product-url">Product URL</label>
                     <input type="text" class="form-control" id="show-product-url" name="url" readonly>
                   </div>
                 <div class="form-group">
-                  <label for="product-description">Product Description</label>
+                  <label for="product-description">Product Description *ina</label>
                   <textarea class="form-control" id="show-product-description" rows="3" readonly></textarea>
                 </div>
                 <div class="form-group">
+                  <label for="product-description_eng">Product Description *eng</label>
+                  <textarea class="form-control" id="show-product-description_eng" rows="3" readonly></textarea>
+                </div>
+                <div class="form-group">
                     <label for="product-image">Product Image</label>
-                    <img src="" alt="product's image" id="show-product-image">
+                    <img style="height: 200px; width:224px;" src="" alt="product's image" id="show-product-image">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -198,16 +205,20 @@
                @method('PUT')
                 @csrf
                 <div class="form-group">
-                  <label for="product-name">Procut Name</label>
+                  <label for="product-name">Product Name</label>
                   <input type="text" class="form-control" id="edit-product-name" name="title">
                 </div>
                 <div class="form-group">
-                    <label for="product-url">Procut URL</label>
+                    <label for="product-url">Product URL</label>
                     <input type="text" class="form-control" id="edit-product-url" name="url">
                   </div>
                 <div class="form-group">
-                  <label for="product-description">Product Description</label>
+                  <label for="product-description">Product Description *ina</label>
                   <textarea class="form-control" id="edit-product-description" rows="3" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="product-description_eng">Product Description *eng</label>
+                  <textarea class="form-control" id="edit-product-description_eng" rows="3" name="description_en"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="product-image">Product Image</label>
@@ -272,12 +283,14 @@
                         $("#show-product-name").val(result.product['title']);
                         $("#show-product-url").val(result.product['url']);
                         $('#show-product-description').val(result.product['description']);
+                        $('#show-product-description_eng').val(result.product['description_en']);
                         $("#show-product-image").attr("src", "/"+result.product['image']);
                         $('#showProduct').modal('show');
                     }else{
                         $("#edit-product-name").val(result.product['title']);
                         $("#edit-product-url").val(result.product['url']);
                         $('#edit-product-description').val(result.product['description']);
+                        $('#edit-product-description_eng').val(result.product['description_en']);
                         $("#edit-form-product").attr("action", "product/"+result.product['id_product']);
                         $('#editProduct').modal('show');
                     }                   

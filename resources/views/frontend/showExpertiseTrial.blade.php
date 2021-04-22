@@ -1,12 +1,17 @@
 @foreach ($trials as $trial)
-<div class="col-sm-4">
-    <div style="border-radius: 5%"  class="card shadow p-3 mb-5 bg-white" style="border"><img style="max-height:250px" class="card-img-top" src="{{$trial->project->image}}" alt="">
-        <div class="card-body rounded-100">
-            <h5 font-weight-bold>{{$trial->project->name}}</h5>
-            <p>Instansi - {{$trial->project->instansi}}</p>
-            <p class="card-text">{{$trial->project->description}}</p>
-            <a href="{{$trial->url}}">Try Project <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<div class="column">
+    <div class="feature-card card-md hover-inset has-text-centered">
+        <div class="brand-logo">
+            <img src="{{asset($trial->project->image)}}" alt="">
         </div>
+        <div class="card-title">
+            <h4>{{$trial->project->name}}</h4>
+        </div>
+        <div class="card-feature-description">
+            <span>{{$trial->project->description}}</span>
+        </div>
+        <a href="{{$trial->url}}" class="button btn-align primary-btn btn-outlined is-bold rounded">Try Project</a>
     </div>
 </div>
 @endforeach
+

@@ -11,4 +11,8 @@ class BlogCategory extends Model
     
     protected $table = 'tb_blog_category';
     protected $primaryKey = 'id_blog_category';
+
+    public function blog(){
+        return $this->hasMany('App\Blog', 'id_blog_category');
+    }
 }

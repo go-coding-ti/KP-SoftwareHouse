@@ -10,7 +10,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">News Category</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -108,8 +107,12 @@
             <form method="post" action="{{route('blog_category.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <label for="blog_category-name">Category Name</label>
-                  <input type="text" class="form-control" id="blog_category-name" name="name" value="{{old('title')}}">
+                  <label for="blog_category-name">Category Name *ina</label>
+                  <input type="text" class="form-control" id="blog_category-name" name="name" value="{{old('name')}}">
+                </div>
+                <div class="form-group">
+                  <label for="blog_category-name_eng">Category Name *eng</label>
+                  <input type="text" class="form-control" id="blog_category-name_eng" name="name_en" value="{{old('name_en')}}">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -134,8 +137,12 @@
         </div>
         <div class="modal-body">
                 <div class="form-group">
-                  <label for="blog_category-name">Category Name</label>
+                  <label for="blog_category-name">Category Name *ina</label>
                   <input type="text" class="form-control" id="show-blog_category-name" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="blog_category-name_eng">Category Name *eng</label>
+                  <input type="text" class="form-control" id="show-blog_category-name_eng" readonly>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -162,8 +169,12 @@
                @method('PUT')
                 @csrf
                 <div class="form-group">
-                  <label for="blog_category-name">Procut Name</label>
+                  <label for="blog_category-name">Category Name</label>
                   <input type="text" class="form-control" id="edit-blog_category-name" name="name">
+                </div>
+                <div class="form-group">
+                  <label for="blog_category-name_eng">Category Name</label>
+                  <input type="text" class="form-control" id="edit-blog_category-name_eng" name="name_en">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -220,9 +231,11 @@
                 success: function(result){
                     if(status == 'show'){
                         $("#show-blog_category-name").val(result.blog_category['name']);
+                        $("#show-blog_category-name_eng").val(result.blog_category['name_en']);
                         $('#showNewsCategory').modal('show');
                     }else{
                         $("#edit-blog_category-name").val(result.blog_category['name']);
+                        $("#edit-blog_category-name_eng").val(result.blog_category['name_en']);
                         $("#edit-form-blog_category").attr("action", "/admin/blog/category/"+result.blog_category['id_blog_category']);
                         $('#editNewsCategory').modal('show');
                     }                   

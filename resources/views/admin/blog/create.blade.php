@@ -12,7 +12,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Blog - Create</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -58,9 +57,13 @@
             <form id="form-product" method="post" action="{{route('blog.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title">
+                    <label for="title">Title *ina</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
                 </div>
+                <div class="form-group">
+                  <label for="title_eng">Title *eng</label>
+                  <input type="text" class="form-control" id="title_eng" name="title_en" value="{{old('title_en')}}">
+              </div>
                 <div class="form-group">
                     <label for="blog_category_name">Category</label>
                     <select class="selectpicker form-control" data-live-search="true" id="blog_category_name" rows="3" name="id_blog_category" value="{{old('id_blog_category')}}">
@@ -75,9 +78,13 @@
                     <input type="file" class="form-control-file" id="image" name="image">
                 </div>
                 <div class="form-group">
-                    <label for="description">Content</label>
-                    <textarea id="content" class="summernote" name="content"></textarea>
+                    <label for="description">Content *ina</label>
+                    <textarea id="content" class="summernote" name="content">{{old('content')}}</textarea>
                 </div>
+                <div class="form-group mt-2">
+                  <label for="description_eng">Content *eng</label>
+                  <textarea id="content" class="summernote" name="content_en">{{old('content_en')}}</textarea>
+              </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Submit">
                 </div>
@@ -87,34 +94,6 @@
       </div>
     </div>
 </div>
-
-{{-- Add Category Modal --}}
-<div class="modal fade" id="addBlogCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-      <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add New BlogCategory</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-          </button>
-      </div>
-      <div class="modal-body">
-          <p>Please insert all the form to add new blog category.</p>
-              <div class="form-group">
-                <input id="signup-token" name="_token" type="hidden" value="{{csrf_token()}}">
-                <label for="blog_category-name">Category Name</label>
-                <input type="text" class="form-control" id="blogCategoryName" name="name" value="{{old('name')}}">
-              </div>
-              <div class="modal-footer">
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <button class="btn btn-primary" id="submitBlogCategory">Submit</button>
-              </div>             
-      </div>
-
-      </div>
-  </div>
-</div>
-
 @endsection
 
 @section('js')

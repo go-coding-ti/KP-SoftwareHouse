@@ -1,49 +1,105 @@
 @extends('layouts.app-frontend')
 
-@section('content')
-{{-- Banner Awal --}}
-<div class="container-fluid gtco-banner-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1> Project <span>Software House</span></h1>
-                <p> Project yang telah kami buat </p>
-                <a href="#">Contact Us <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-            <div class="col-md-6">
-                <div class="card"><img class="card-img-top img-fluid" src="{{asset('assets/frontend/images/product.png')}}" alt=""></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- List Project --}}
-<div class="container-fluid">
-    <h2 class="text-center">Project Hasil Software House</h2>
-    <div class="row d-flex justify-content-center mt-5">
-        <div class="list-group flex-sm-row" id="list-tab" role="tablist">
-            <button onclick="filter(0)" class="list-group-item list-group-item-action active" id="buttonall" data-toggle="list" role="tab" aria-controls="home">All Expertise</button>
-            @foreach ($expertises as $expertise)
-                <button  class="list-group-item list-group-item-action" id="button{{$expertise->id_expertise}}" data-toggle="list" role="tab" aria-controls="home" onclick="filter({{$expertise->id_expertise}})">{{$expertise->name}}</button>
-            @endforeach
-        </div>
-    </div>
-    <div class="row ml-4 mr-4 mt-5 ganti">
-        @foreach ($projects as $project)
-            <div class="col-sm-4">
-                <div style="border-radius: 5%"  class="card shadow p-3 mb-5 bg-white" style="border"><img style="max-height:250px" class="card-img-top" src="{{$project->image}}" alt="">
-                    <div class="card-body rounded-100">
-                        <h5 font-weight-bold>{{$project->name}}</h5>
-                        <p>Instansi - {{$project->instansi}}</p>
-                        <p class="card-text">{{$project->description}}</p>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div>
+@section('div-nav')
+    <div class="hero is-relative is-theme-primary">
 @endsection
 
-@section('js')
+@section('jumbotron')
+    <div id="main-hero" class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-vcentered pt-80 pb-80">
+                <div class="column is-5 signup-column has-text-left">
+                    <h1 class="title main-title text-bold is-2">
+                        Project
+                    </h1>
+                    {{-- <h2 class="subtitle is-5 light-text no-margin-bottom">
+                        (dummy) Produk yang telah kami buat dan siap untuk digunakan
+                    </h2> --}}
+                    <br>
+                    <!-- Signup form -->
+                    <div class="signup-block">
+                        <p class="components-cta">
+                            <a href="#product-fe" class="button button-cta btn-align light-btn btn-outlined is-bold rounded">
+                                Get Started
+                            </a>
+                        </p>
+                    </div>
+                    <!-- /Signup form -->
+                </div>
+                <div class="column is-offset-1">
+                    <!-- Hero mockup -->
+                    <figure class="image is-hidden-mobile">
+                        <img src="{{asset('assets/images/illustrations/UI/globalytics.png')}}" alt="">
+                    </figure>
+                    <!-- /Hero mockup -->
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('content')
+    <!-- Scrollnav -->
+    <div id="scrollnav" class="scroll-nav-wrapper">
+        <div class="container">
+            <div class="tabs scrollnav-tabs is-centered">
+                <ul>
+                    <li class="scrollnav-item is-active"><a onclick="filter(0)">All Expertise</a></li>
+                    @foreach ($expertises as $expertise)
+                        <li class="scrollnav-item"><a onclick="filter({{$expertise->id_expertise}})">{{$expertise->name}}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>  
+    </div>
+    <!-- /Scrollnav -->
+    <!-- Card Section -->
+    <section id="product-fe" class="section section-light-grey is-medium">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <div class="bg-number">1</div>
+                <h2 class="title section-title has-text-centered dark-text"> Our Project</h2>
+                {{-- <div class="subtitle has-text-centered is-tablet-padded">
+                    Discover many pre-built integrations with the most popular apps of the web to kickstart your system.
+                </div> --}}
+            </div>
+    
+            <div class="content-wrapper">
+                <div class="columns integration-cards is-minimal is-vcentered is-gapless is-multiline ganti">
+                    <!-- Card -->
+                    @foreach ($projects as $project)
+                        <div class="column">
+                            <div class="feature-card card-md hover-inset has-text-centered">
+                                <div class="brand-logo">
+                                    <img src="{{asset($project->image)}}" alt="">
+                                </div>
+                                <div class="card-title">
+                                    <h4>{{$project->name}}</h4>
+                                </div>
+                                <div class="card-feature-description">
+                                    @if (session()->get('language') == 'id')
+                                        <span>{{$project->description}}</span>
+                                    @else
+                                        <span>{{$project->description_en}}</span>
+                                    @endif
+                                    
+                                </div>
+                                <b>Instansi: {{$project->instansi}}</b>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Card Section -->    
+@endsection
+
+@section('js-atas')
+    <script src="{{asset('assets/frontend/js/landingv2.js')}}"></script>
+@endsection
+
+@section('js-bawah')
 <script>
     function filter(id_expertise){
         jQuery.ajax({

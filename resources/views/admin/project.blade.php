@@ -11,7 +11,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Project</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -130,8 +129,12 @@
                   <input type="text" class="form-control" id="project-name" name="name" value="{{old('name')}}">
                 </div>
                 <div class="form-group">
-                  <label for="project-description">Project Description</label>
+                  <label for="project-description">Project Description *ina</label>
                   <textarea class="form-control" id="project-description" rows="3" name="description" value="{{old('description')}}"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="project-description_eng">Project Description *eng</label>
+                  <textarea class="form-control" id="project-description_eng" rows="3" name="description_en" value="{{old('description_en')}}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="project-description">Project Expertise</label>
@@ -176,8 +179,12 @@
                   <input type="text" class="form-control" id="show-project-name" readonly>
                 </div>
                 <div class="form-group">
-                  <label for="project-description">Project Description</label>
+                  <label for="project-description">Project Description *ina</label>
                   <textarea class="form-control" id="show-project-description" rows="3" readonly></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="project-description_eng">Project Description *eng</label>
+                  <textarea class="form-control" id="show-project-description_eng" rows="3" readonly></textarea>
                 </div>
                 <div class="form-group">
                   <label for="show-project-expertise">Project Expertise</label>
@@ -220,8 +227,12 @@
                   <input type="text" class="form-control" id="edit-project-name" name="name">
                 </div>
                 <div class="form-group">
-                  <label for="project-description">Project Description</label>
+                  <label for="project-description">Project Description *ina</label>
                   <textarea class="form-control" id="edit-project-description" rows="3" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="project-description_eng">Project Description *eng</label>
+                  <textarea class="form-control" id="edit-project-description_eng" rows="3" name="description_en"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="edit-project-description">Project Expertise</label>
@@ -304,6 +315,7 @@
                         $("#show-project-name").val(result.project['name']);
                         $("#show-project-url").val(result.project['url']);
                         $('#show-project-description').val(result.project['description']);
+                        $('#show-project-description_eng').val(result.project['description_en']);
                         $("#show-project-image").attr("src", "/"+result.project['image']);
                         $("#show-project-expertise").val(result.expertises);
                         $("#show-project-instansi").val(result.project['instansi']);
@@ -313,6 +325,7 @@
                         $("#edit-project-name").val(result.project['name']);
                         $("#edit-project-url").val(result.project['url']);
                         $('#edit-project-description').val(result.project['description']);
+                        $('#edit-project-description_eng').val(result.project['description_en']);
                         $('#edit-project-expertise').val(result.expertise);
                         $("#edit-project-instansi").val(result.project['instansi']);
                         $("#edit-form-project").attr("action", "project/"+result.project['id_project']);

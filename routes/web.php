@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home-fe');
+Route::get('/', 'FrontendController@home')->name('home-fe');
 
 Route::get('/product', 'FrontendController@product')->name('product-fe');
 Route::get('/project', 'FrontendController@project')->name('project-fe');
@@ -23,6 +21,10 @@ Route::get('/filter/{id}', 'FrontendController@showExpertise')->name('filter');
 Route::get('/demo','FrontendController@trial')->name('demo');
 Route::get('/news', 'FrontendController@blog')->name('news');
 Route::get('/blog/{kategori}/{judul}', 'FrontendController@blogShow')->name('blog_show');
+Route::get('/blog/{kategori}', 'FrontendController@blogKategori')->name('blog_kategori');
+Route::get('/menu/{menu}', 'FrontendController@menu')->name('menu-fe');
+Route::get('/menu/{menu}/{submenu}', 'FrontendController@submenu')->name('submenu-fe');
+Route::get('/changelanguage', 'FrontendController@chageLanguage')->name('changeLanguage');
 
 Auth::routes();
 
@@ -77,3 +79,35 @@ Route::post('/admin/social-media/store', 'SocialMediaController@store')->name('s
 Route::put('/admin/social-media/{id}', 'SocialMediaController@update')->name('social-media.update');
 
 Route::delete('/admin/social-media/{id}', 'SocialMediaController@destroy')->name('social-media.destroy');
+
+Route::get('/admin/page', 'PageController@index')->name('page');
+Route::get('/admin/page/create', 'PageController@create')->name('page.create');
+Route::post('/admin/page/store', 'PageController@store')->name('page.store');
+Route::get('/admin/page/show/{id}', 'PageController@show')->name('page.show');
+Route::get('/admin/page/edit/{id}', 'PageController@edit')->name('page.edit');
+Route::put('/admin/page/{id}', 'PageController@update')->name('page.update');
+Route::delete('/admin/page/{id}', 'PageController@destroy')->name('page.destroy');
+
+Route::get('/admin/menu', 'MenuController@index')->name('menu');
+Route::post('/admin/menu/store', 'MenuController@store')->name('menu.store');
+Route::get('/admin/menu/{id}/edit', 'MenuController@edit')->name('menu.edit');
+Route::put('/admin/menu/{id}', 'MenuController@update')->name('menu.update');
+Route::delete('/admin/menu/{id}', 'MenuController@destroy')->name('menu.destroy');
+
+Route::get('/admin/submenu', 'SubMenuController@index')->name('submenu');
+Route::post('/admin/submenu/store', 'SubMenuController@store')->name('submenu.store');
+Route::get('/admin/submenu/{id}/edit', 'SubMenuController@edit')->name('submenu.edit');
+Route::put('/admin/submenu/{id}', 'SubMenuController@update')->name('submenu.update');
+Route::delete('/admin/submenu/{id}', 'SubMenuController@destroy')->name('submenu.destroy');
+
+Route::get('/admin/profile', 'ProfileUser@profile')->name('manuser');
+Route::post('/admin/profile/store', 'ProfileUser@profileStore')->name('manuser.profile.store');
+Route::post('/admin/profile/changePassword', 'ProfileUser@profileChangePassword')->name('manuser.profile.changePass');
+
+Route::get('/admin/user', 'ManagementUser@index')->name('user');
+Route::post('/admin/user/store', 'ManagementUser@store')->name('user.store');
+Route::get('/admin/user/{id}/edit', 'ManagementUser@edit')->name('user.edit');
+Route::put('/admin/user/{id}', 'ManagementUser@update')->name('user.update');
+Route::delete('/admin/user/{id}', 'ManagementUser@destroy')->name('user.destroy');
+Route::get('/admin/user/type/{id}', 'ManagementUser@typeChange')->name('user.typeChange');
+

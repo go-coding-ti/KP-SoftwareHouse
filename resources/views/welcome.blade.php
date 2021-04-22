@@ -1,380 +1,627 @@
+{{-- @php
+    dd($language == 'id')
+@endphp --}}
 @extends('layouts.app-frontend')
 
+
+
+@section('div-nav')
+    <div class="hero hero-wavy is-relative is-theme-primary huge-pb">
+    <canvas id="canvas"></canvas>
+@endsection
+
+@section('jumbotron')
+    <div id="main-hero" class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-vcentered">
+                <!-- Caption -->
+                <div class="column is-5 hero-caption">
+                    {{-- <h1 class="title big-landing-title text-bold is-2">
+                        Sistem Informasi Universitas Terintegrasi (SRUTI)
+                    </h1> --}}
+                    <h2 class="subtitle is-5 light-text pt-10 pb-10">
+                        {{-- Discover a full featured chat support platform that will make your clients happy. --}}
+                        @if (session()->get('language') == 'id')
+                            {!! $preference[0]->banner_content_ina !!}
+                        @else
+                            {!! $preference[0]->banner_content_eng !!}
+                        @endif
+                        
+                    </h2>
+                    <p class="pt-10 pb-10">
+                        <a href="#services" class="button button-cta light-btn btn-outlined is-bold rounded z-index-2">
+                            Get Started
+                        </a>
+                    </p>
+                    
+                </div>
+                <!-- Hero image -->
+                <div class="column is-9">
+                    <figure class="image">
+                        <img class="levitate" src="{{asset('assets/frontend/images/illustrations/mockups/landing2/macbook-chat.png')}}" alt="">
+                    </figure>
+                </div>
+                <!-- /Hero image -->
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('content')
-<div class="container-fluid gtco-banner-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1> We promise to bring
-                    the best <span>Software House</span> for
-                    your business. </h1>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus turpis nisl. </p>
-                <a href="#">Contact Us <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-            <div class="col-md-6">
-                <div class="card"><img class="card-img-top img-fluid" src="{{asset('assets/frontend/images/banner-img.png')}}" alt=""></div>
+    <!-- Services -->
+    <section id="services" class="section is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">1</div>
+                <h2 class="title section-title has-text-centered dark-text"> What we do</h2>
             </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid gtco-feature" id="services">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="cover">
-                    <div class="card">
-                        <svg
-                                class="back-bg"
-                                width="100%" viewBox="0 0 900 700" style="position:absolute; z-index: -1">
-                            <defs>
-                                <linearGradient id="PSgrad_01" x1="64.279%" x2="0%" y1="76.604%" y2="0%">
-                                    <stop offset="0%" stop-color="rgb(1,230,248)" stop-opacity="1"/>
-                                    <stop offset="100%" stop-color="rgb(29,62,222)" stop-opacity="1"/>
-                                </linearGradient>
-                            </defs>
-                            <path fill-rule="evenodd" opacity="0.102" fill="url(#PSgrad_01)"
-                                  d="M616.656,2.494 L89.351,98.948 C19.867,111.658 -16.508,176.639 7.408,240.130 L122.755,546.348 C141.761,596.806 203.597,623.407 259.843,609.597 L697.535,502.126 C748.221,489.680 783.967,441.432 777.751,392.742 L739.837,95.775 C732.096,35.145 677.715,-8.675 616.656,2.494 Z"/>
-                        </svg>
-                        <!-- *************-->
 
-                        <svg width="100%" viewBox="0 0 700 500">
-                            <clipPath id="clip-path">
-                                <path d="M89.479,0.180 L512.635,25.932 C568.395,29.326 603.115,76.927 590.357,129.078 L528.827,380.603 C518.688,422.048 472.661,448.814 427.190,443.300 L73.350,400.391 C32.374,395.422 -0.267,360.907 -0.002,322.064 L1.609,85.154 C1.938,36.786 40.481,-2.801 89.479,0.180 Z"></path>
-                            </clipPath>
-                            <!-- xlink:href for modern browsers, src for IE8- -->
-                            <image clip-path="url(#clip-path)" xlink:href="{{asset('assets/frontend/images/learn-img.jpg')}}" width="100%"
-                                   height="465" class="svg__image"></image>
-                        </svg>
-                    </div>
+            <div class="content-wrapper">
+                <div class="columns is-vcentered is-multiline has-text-centered">
+                    <!-- Icon block -->
+                    @foreach ($expertises as $expertise)
+                        <div class="column is-6">
+                            <div class="startup-icon-box">
+                                <div class="is-icon-reveal">
+                                    {{-- <i class="im im-icon-Bar-Chart"></i> --}}
+                                    <img style="max-height: 140px; max-width: 140px;"  src="{{asset($expertise->image)}}" alt="">
+                                </div>
+                                <div class="box-title">{{$expertise->name}}</div>
+                                <p class="box-content is-tablet-padded">
+                                    @if (session()->get('language') == 'id')
+                                        {{$expertise->description}}
+                                    @else
+                                        {{$expertise->description_en}}
+                                    @endif
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="has-text-centered is-title-reveal pt-20 pb-20">
+                    <a href="#" class="button button-cta primary-btn rounded raised">Learn more</a>
                 </div>
             </div>
-            <div class="col-md-5">
-                <h2> We are a Creative Digital
-                    Agency & Marketing Experts </h2>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus turpis nisl, vitae dictum mi
-                    semper convallis. Ut sapien leo, varius ac dapibus a, cursus quis ante. </p>
-                <p>
-                    <small>Nunc sodales lobortis arcu, sit amet venenatis erat placerat a. Donec lacinia magna nulla,
-                        cursus impediet augue egestas id. Suspendisse dolor lectus, pellentesque quis tincidunt ac,
-                        dictum id neque.
-                    </small>
-                </p>
-                <a href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
         </div>
-    </div>
-</div>
-<div class="container-fluid gtco-features" id="about">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <h2> Explore The Services<br/>
-                    We Offer For You </h2>
-                <p> Nunc sodales lobortis arcu, sit amet venenatis erat placerat a. Donec lacinia magna nulla, cursus
-                    impediet augue egestas id. Suspendisse dolor lectus, pellentesque quis tincidunt ac, dictum id
-                    neque. </p>
-                <a href="#">All Services <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-            <div class="col-lg-8">
-                <svg id="bg-services"
-                     width="100%"
-                     viewBox="0 0 1000 800">
-                    <defs>
-                        <linearGradient id="PSgrad_02" x1="64.279%" x2="0%" y1="76.604%" y2="0%">
-                            <stop offset="0%" stop-color="rgb(1,230,248)" stop-opacity="1"/>
-                            <stop offset="100%" stop-color="rgb(29,62,222)" stop-opacity="1"/>
-                        </linearGradient>
-                    </defs>
-                    <path fill-rule="evenodd" opacity="0.102" fill="url(#PSgrad_02)"
-                          d="M801.878,3.146 L116.381,128.537 C26.052,145.060 -21.235,229.535 9.856,312.073 L159.806,710.157 C184.515,775.753 264.901,810.334 338.020,792.380 L907.021,652.668 C972.912,636.489 1019.383,573.766 1011.301,510.470 L962.013,124.412 C951.950,45.594 881.254,-11.373 801.878,3.146 Z"/>
-                </svg>
-                <div class="row">
-                    <div class="col">
-                        <div class="card text-center">
-                            <div class="oval"><img class="card-img-top" src="{{asset('assets/frontend/images/web-design.png')}}" alt=""></div>
-                            <div class="card-body">
-                                <h3 class="card-title">Web Design</h3>
-                                <p class="card-text">Nullam quis libero in lorem accumsan sodales. Nam vel nisi
-                                    eget.</p>
-                            </div>
-                        </div>
-                        <div class="card text-center">
-                            <div class="oval"><img class="card-img-top" src="{{asset('assets/frontend/images/marketing.png')}}" alt=""></div>
-                            <div class="card-body">
-                                <h3 class="card-title">Marketing</h3>
-                                <p class="card-text">Nullam quis libero in lorem accumsan sodales. Nam vel nisi
-                                    eget.</p>
-                            </div>
+    </section>
+    <!-- /Services -->
+
+    <!-- Feature highlight -->
+    {{-- <div class="section section-feature-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">2</div>
+                <h2 class="title section-title has-text-centered dark-text">Powerful analytics</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    Create your own data widgets to build your own and specific dashboard. Make it fit your needs perfectly.
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <!-- Row -->
+                <div class="columns is-vcentered">
+                    <!-- Featured image -->
+                    <div class="column is-7">
+                        <div>
+                            <figure class="image is-4-by-3">
+                                <img class="first" src="{{asset('assets/frontend/images/illustrations/UI/analytic-widgets.png')}}" alt="">
+                            </figure>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card text-center">
-                            <div class="oval"><img class="card-img-top" src="{{asset('assets/frontend/images/seo.png')}}" alt=""></div>
-                            <div class="card-body">
-                                <h3 class="card-title">SEO</h3>
-                                <p class="card-text">Nullam quis libero in lorem accumsan sodales. Nam vel nisi
-                                    eget.</p>
-                            </div>
-                        </div>
-                        <div class="card text-center">
-                            <div class="oval"><img class="card-img-top" src="{{asset('assets/frontend/images/graphics-design.png')}}" alt=""></div>
-                            <div class="card-body">
-                                <h3 class="card-title">Graphics Design</h3>
-                                <p class="card-text">Nullam quis libero in lorem accumsan sodales. Nam vel nisi
-                                    eget.</p>
-                            </div>
+                    <!-- Content -->
+                    <div class="column is-4 is-offset-1">
+                        <div class="icon-subtitle"><i class="im im-icon-Bar-Chart5"></i></div>
+                        <h2 class="title section-subtitle dark-text text-bold is-2">
+                            Get started in minutes
+                        </h2>
+                        <span class="section-feature-description">Lorem ipsum dolor sit amet, clita laoreet ne cum. His cu harum inermis iudicabit. Ex vidit fierent hendrerit eum, sed stet periculis ut. Vis in probo decore labitur. Unum simul an vis, tale patrioque eos ad, dicunt percipit ea nam. </span>
+                        <div class="pt-10 pb-10">
+                            <a href="#" class="button btn-align btn-more is-link color-primary is-title-reveal">
+                                Learn more about this <i class="sl sl-icon-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
+                <!-- /Row -->
             </div>
         </div>
-    </div>
-</div>
-<div class="container-fluid gtco-numbers-block">
-    <div class="container">
-        <svg width="100%" viewBox="0 0 1600 400">
-            <defs>
-                <linearGradient id="PSgrad_03" x1="80.279%" x2="0%"  y2="0%">
-                    <stop offset="0%" stop-color="rgb(1,230,248)" stop-opacity="1" />
-                    <stop offset="100%" stop-color="rgb(29,62,222)" stop-opacity="1" />
+    </div> --}}
+    <!-- /Feature highlight -->
 
-                </linearGradient>
-
-            </defs>
-            <!-- <clipPath id="clip-path3">
-
-                                      </clipPath> -->
-
-            <path fill-rule="evenodd"  fill="url(#PSgrad_03)"
-                  d="M98.891,386.002 L1527.942,380.805 C1581.806,380.610 1599.093,335.367 1570.005,284.353 L1480.254,126.948 C1458.704,89.153 1408.314,59.820 1366.025,57.550 L298.504,0.261 C238.784,-2.944 166.619,25.419 138.312,70.265 L16.944,262.546 C-24.214,327.750 12.103,386.317 98.891,386.002 Z"></path>
-
-            <clipPath id="ctm" fill="none">
-                <path
-                        d="M98.891,386.002 L1527.942,380.805 C1581.806,380.610 1599.093,335.367 1570.005,284.353 L1480.254,126.948 C1458.704,89.153 1408.314,59.820 1366.025,57.550 L298.504,0.261 C238.784,-2.944 166.619,25.419 138.312,70.265 L16.944,262.546 C-24.214,327.750 12.103,386.317 98.891,386.002 Z"></path>
-            </clipPath>
-
-            <!-- xlink:href for modern browsers, src for IE8- -->
-            <image  clip-path="url(#ctm)" xlink:href="{{asset('assets/frontend/images/word-map.png')}}" height="800px" width="100%" class="svg__image">
-
-            </image>
-
-        </svg>
-        <div class="row">
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">125</h5>
-                        <p class="card-text">Active Projects</p>
-                    </div>
+    <!-- Mockup section -->
+    <section class="section section-light-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">3</div>
+                <h2 class="title section-title has-text-centered dark-text"> Get our Product</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    You can immediatly check our product
                 </div>
             </div>
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">200</h5>
-                        <p class="card-text">Business Growth</p>
+
+            <div class="content-wrapper">
+                <!-- Mockup / Video switcher -->
+                <div class="has-text-centered">
+                    <a href="{{route('product-fe')}}" id="show-video" class="button button-action btn-align rounded raised primary-btn">
+                        Check Our Product
+                    </a>
+                    <a id="show-mockup" class="button button-action btn-align rounded raised secondary-btn is-hidden">
+                        Beautiful and simple UI
+                    </a>
+                </div>
+                <div class="columns">
+                    <!-- Mockup -->
+                    <div id="mockup" class="column">
+                        <!-- Pulsating dots and custom tooltips -->
+                        <div class="mockup-dots is-hidden-touch">
+                            <div class="dot first is-dot-reveal"></div>
+                            <div class="dot-tip tip-first gelatine">Simple and modular UI</div>
+                            <div class="dot second is-dot-reveal"></div>
+                            <div class="dot-tip tip-second gelatine">Native responsiveness</div>
+                            <div class="dot third is-dot-reveal"></div>
+                            <div class="dot-tip tip-third gelatine">Clean and crispy design</div>
+                        </div>
+                        <!-- /Pulsating dots and custom tooltips -->
+
+                        <!-- Laptop mockup -->
+                        <img class="animated preFadeInUp fadeInUp" src="{{asset('assets/frontend/images/illustrations/UI/app-mockup.png')}}" alt="">
                     </div>
+                    <!-- /Mockup -->
+
+                    <!-- Youtube Video player -->
+                    {{-- <div id="video" class="column is-6 is-offset-3 animated preFadeInUp fadeInUp is-hidden pt-80 pb-80">
+                        <div class="side-block">
+                            <div class="background-wrapper">
+                                <div id="video-embed" class="video-wrapper" data-url="https://www.youtube.com/watch?v=iaj8ktgL3BY">
+                                    <div class="video-overlay"></div>
+                                    <div class="playbutton">
+                                        <div class="icon-play">
+                                            <i class="im im-icon-Play-Music"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <!-- /Youtube Video player -->
                 </div>
             </div>
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">530</h5>
-                        <p class="card-text">Completed Projects</p>
+
+        </div>
+    </section>
+    <!-- /Mockup section -->
+
+        <!-- /UI Feature -->
+        <section class="section section-feature-grey is-medium">
+            <div class="container">
+                <!-- Title -->
+                <div class="section-title-wrapper">
+                    <div class="bg-number">4</div>
+                    <h2 class="title section-title has-text-centered dark-text"> Get to Know More</h2>
+                    <div class="subtitle has-text-centered is-tablet-padded">
+                        Our Video
                     </div>
                 </div>
+                <div class="columns is-vcentered">
+                    <div class="column is-5 is-offset-1">
+                        <!-- Video block -->
+                        <div class="side-block is-title-reveal">
+                            <div class="background-wrapper">
+                                <div id="video-embed" class="video-wrapper" data-url="{!! $preference[0]->link_video !!}">
+                                    <div class="video-overlay"></div>
+                                    <div class="playbutton">
+                                        <div class="icon-play">
+                                            <i class="im im-icon-Play-Music"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Video block -->
+                    </div>
+        
+                    <div class="column is-4 is-offset-1">
+                        <!-- Title -->
+                        <div class="title-wrapper">
+                            <h6 class="top-subtitle">Watch the video and</h6>
+                            <h2 class="title is-landing quick-feature">
+                                Get started fast
+                            </h2>
+                            <div class="title-divider is-small"></div>
+                        </div>
+                        <!-- /Title -->
+        
+                        <span class="section-feature-description">
+                            @if (session()->get('language') == 'id')
+                                {!! $preference[0]->video_description_in !!}
+                            @else
+                                {!! $preference[0]->video_description_en !!}
+                            @endif
+                        </span>
+                        <div class="pt-10 pb-10">
+                            <a href="#" class="button btn-align btn-more is-link color-primary">
+                                Learn more <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+        
+                </div>
             </div>
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">941</h5>
-                        <p class="card-text">Happy Clients</p>
+        </section>
+        <!-- /UI Feature -->
+                
+    <!-- Features section -->
+    {{-- <section class="section section-feature-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">5</div>
+                <h2 class="title section-title has-text-centered dark-text"> Awesome features</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    Discover many outstanding features, such as document management, advanced search and version history.
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <!-- Featured image -->
+                    <div class="column is-7 has-text-centered">
+                        <img class="featured-svg" src="{{asset('assets/frontend/images/illustrations/UI/add-docs.png')}}" alt="">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="column is-5">
+                        <h3 class="detailed-feature-subtitle">Manage documents</h3>
+                        <h2 class="title feature-title bordered dark-text">Upload files</h2>
+                        <div class="title-divider"></div>
+                        <span class="section-feature-description">Lorem ipsum dolor sit amet, clita laoreet ne cum. His cu harum inermis iudicabit. Ex vidit fierent hendrerit eum, sed stet periculis ut. Vis in probo decore labitur. Unum simul an vis, tale patrioque eos ad, dicunt percipit ea nam. Vis dolor quidam assentior te, atomorum posidonium qui an.</span>
+                        <div class="pt-10 pb-10">
+                            <a href="#" class="button btn-align btn-more is-link color-primary">
+                                Learn more about this <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+                <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <!-- Featured image -->
+                    <div class="column is-7 has-text-centered is-hidden-desktop is-hidden-tablet">
+                        <img class="featured-svg" src="{{asset('assets/frontend/images/illustrations/UI/bars.png')}}" alt="">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="column is-5 has-text-right">
+                        <h3 class="detailed-feature-subtitle">Powerful analytics</h3>
+                        <h2 class="title feature-title bordered dark-text">Real time data</h2>
+                        <div class="title-divider is-right"></div>
+                        <span class="section-feature-description">Lorem ipsum dolor sit amet, clita laoreet ne cum. His cu harum inermis iudicabit. Ex vidit fierent hendrerit eum, sed stet periculis ut. Vis in probo decore labitur. Unum simul an vis, tale patrioque eos ad, dicunt percipit ea nam. Vis dolor quidam assentior te, atomorum posidonium qui an.</span>
+                        <div class="pt-10 pb-10">
+                            <a href="#" class="button btn-align btn-more is-link color-primary">
+                                Learn more about this <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="column is-7 has-text-centered is-hidden-mobile">
+                        <!-- Featured image (this is a mobile only image to make feature alternate properly on small screens) -->
+                        <img class="featured-svg" src="{{asset('assets/frontend/images/illustrations/UI/bars.png')}}" alt="">
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+                <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <!-- Featured image -->
+                    <div class="column is-7 has-text-centered">
+                        <img class="featured-svg" src="{{asset('assets/frontend/images/illustrations/UI/table.png')}}" alt="">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="column is-5">
+                        <h3 class="detailed-feature-subtitle">Find anything</h3>
+                        <h2 class="title feature-title bordered dark-text">Efficient Search tools</h2>
+                        <div class="title-divider"></div>
+                        <span class="section-feature-description">Lorem ipsum dolor sit amet, clita laoreet ne cum. His cu harum inermis iudicabit. Ex vidit fierent hendrerit eum, sed stet periculis ut. Vis in probo decore labitur. Unum simul an vis, tale patrioque eos ad, dicunt percipit ea nam. Vis dolor quidam assentior te, atomorum posidonium qui an.</span>
+                        <div class="pt-10 pb-10">
+                            <a href="#" class="button btn-align btn-more is-link color-primary">
+                                Learn more about this <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+                <h2 class="title has-text-centered is-title-reveal">
+                    <a href="features.html" class="button button-cta btn-align rounded raised primary-btn">
+                        See all Features
+                    </a>
+                </h2>
+            </div>
+
+        </div>
+    </section> --}}
+    <!-- /Features section -->
+
+    <!-- Support cards section -->
+    {{-- <section class="section section-light-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">6</div>
+                <h2 class="title section-title has-text-centered dark-text"> First class Support</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    Our support team will do everything to make you feel comfortable with our application and services. Just ask them !
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="columns">
+                    <!-- Card -->
+                    <div class="column is-one-third">
+                        <div class="feature-card card-md is-startup light-bordered hover-inset has-text-centered is-card-reveal">
+                            <!-- Card icon -->
+                            <div class="card-icon">
+                                <img src="{{asset('assets/frontend/images/illustrations/icons/startup/lifesaver.svg')}}" alt="">
+                            </div>
+                            <!-- Content -->
+                            <div class="card-title">
+                                <h4>Support center</h4>
+                            </div>
+                            <div class="card-feature-description">
+                                <span class="">Lorem ipsum dolor sit amet, clita laoreet ne cum. His caelus elet cu harum inermis iudicabit.</span>
+                            </div>
+                            <a href="#" class="button btn-align btn-more is-link color-primary mt-10 mb-10">
+                                Learn more <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Card -->
+                    <div class="column">
+                        <div class="feature-card card-md is-startup light-bordered hover-inset has-text-centered is-card-reveal">
+                            <!-- Card icon -->
+                            <div class="card-icon">
+                                <img src="{{asset('assets/frontend/images/illustrations/icons/startup/wallet.svg')}}" alt="">
+                            </div>
+                            <!-- Content -->
+                            <div class="card-title">
+                                <h4>Free updates</h4>
+                            </div>
+                            <div class="card-feature-description">
+                                <span class="">Lorem ipsum dolor sit amet, clita laoreet ne cum. His caelus elet cu harum inermis iudicabit.</span>
+                            </div>
+                            <a href="#" class="button btn-align btn-more is-link color-primary mt-10 mb-10">
+                                Learn more <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Card -->
+                    <div class="column">
+                        <div class="feature-card card-md is-startup light-bordered hover-inset has-text-centered is-card-reveal">
+                            <!-- Card icon -->
+                            <div class="card-icon">
+                                <img src="{{asset('assets/frontend/images/illustrations/icons/startup/building.svg')}}" alt="">
+                            </div>
+                            <!-- Content -->
+                            <div class="card-title">
+                                <h4>Support scaling</h4>
+                            </div>
+                            <div class="card-feature-description">
+                                <span class="">Lorem ipsum dolor sit amet, clita laoreet ne cum. His caelus elet cu harum inermis iudicabit.</span>
+                            </div>
+                            <a href="#" class="button btn-align btn-more is-link color-primary mt-10 mb-10">
+                                Learn more <i class="sl sl-icon-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="container-fluid gtco-testimonials">
-    <div class="container">
-        <h2>What our customers say about us.</h2>
-        <div class="owl-carousel owl-carousel1 owl-theme">
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/customer1.jpg')}}" alt="">
-                    <div class="card-body">
-                        <h5>Lisa Gally <br/>
-                            <span> Project Manager </span></h5>
-                        <p class="card-text">“ Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                            impedit quo minus id quod maxime placeat ” </p>
-                    </div>
+    </section> --}}
+    <!-- /Support cards section -->
+
+    <!-- Static Testimonials -->
+    {{-- <section id="card-testimonials" class="section parallax is-relative is-medium" data-background="" data-color="#000" data-color-opacity="0.0">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">7</div>
+                <h2 class="title section-title has-text-centered dark-text"> Our clients love us</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    Just take a look at what our clients say about us. We thank them a lot for top ranking us and for using our solutions.
                 </div>
             </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/customer2.jpg')}}" alt="">
-                    <div class="card-body">
-                        <h5>Missy Limana<br/>
-                            <span> Project Manager </span></h5>
-                        <p class="card-text">“ Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                            impedit quo minus id quod maxime placeat ” </p>
+
+            <div class="content-wrapper">
+                <div class="columns is-vcentered">
+                    <div class="column"></div>
+                    <div class="column is-10">
+                        <!-- Testimonials -->
+                        <div class="columns is-vcentered">
+                            <div class="column is-6">
+                                <!-- Testimonial item -->
+                                <div class="flex-card testimonial-card light-bordered light-raised padding-20">
+                                    <div class="testimonial-title">
+                                        Amazed by the product
+                                    </div>
+                                    <div class="testimonial-text">
+                                        Lorem ipsum dolor sit amet, vim quidam blandit voluptaria no, has eu lorem convenire incorrupte. Vis mutat altera percipit ad.
+                                    </div>
+                                    <div class="user-id">
+                                        <img class="" src="http://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{{asset('assets/frontend/images/startup/avatars/dan.png')}}">
+                                        <div class="info">
+                                            <div class="name">Dan Shwartz</div>
+                                            <div class="position">Software engineer</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonial item -->
+                                <div class="flex-card testimonial-card light-bordered light-raised padding-20">
+                                    <div class="testimonial-title">
+                                        My tasks are now painless
+                                    </div>
+                                    <div class="testimonial-text">
+                                        Lorem ipsum dolor sit amet, vim quidam blandit voluptaria no, has eu lorem convenire incorrupte. Vis mutat altera percipit ad.
+                                    </div>
+                                    <div class="user-id">
+                                        <img class="" src="http://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{{asset('assets/frontend/images/startup/avatars/janet.jpg')}}">
+                                        <div class="info">
+                                            <div class="name">Jane Guzmann</div>
+                                            <div class="position">CFO</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column is-6">
+                                <!-- Testimonial item -->
+                                <div class="flex-card testimonial-card light-bordered light-raised padding-20">
+                                    <div class="testimonial-title">
+                                        Very nice support
+                                    </div>
+                                    <div class="testimonial-text">
+                                        Lorem ipsum dolor sit amet, vim quidam blandit voluptaria no, has eu lorem convenire incorrupte. Vis mutat altera percipit ad.
+                                    </div>
+                                    <div class="user-id">
+                                        <img class="" src="http://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{{asset('assets/frontend/images/startup/avatars/helen.jpg')}}">
+                                        <div class="info">
+                                            <div class="name">Hellen Miller</div>
+                                            <div class="position">Accountant</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonial item -->
+                                <div class="flex-card testimonial-card light-bordered light-raised padding-20">
+                                    <div class="testimonial-title">
+                                        My income has doubled
+                                    </div>
+                                    <div class="testimonial-text">
+                                        Lorem ipsum dolor sit amet, vim quidam blandit voluptaria no, has eu lorem convenire incorrupte. Vis mutat altera percipit ad.
+                                    </div>
+                                    <div class="user-id">
+                                        <img class="" src="http://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{{asset('assets/frontend/images/startup/avatars/anthony.jpg')}}">
+                                        <div class="info">
+                                            <div class="name">Anthony Leblanc</div>
+                                            <div class="position">Founder at Hereby</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Testimonials -->
                     </div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/customer3.jpg')}}" alt="">
-                    <div class="card-body">
-                        <h5>Aana Brown<br/>
-                            <span> Project Manager </span></h5>
-                        <p class="card-text">“ Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                            impedit quo minus id quod maxime placeat ” </p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/customer3.jpg')}}" alt="">
-                    <div class="card-body">
-                        <h5>Aana Brown<br/>
-                            <span> Project Manager </span></h5>
-                        <p class="card-text">“ Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                            impedit quo minus id quod maxime placeat ” </p>
-                    </div>
+                    <div class="column"></div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="container-fluid gtco-features-list">
-    <div class="container">
-        <div class="row">
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="{{asset('assets/frontend/images/quality-results.png')}}" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Quality Results</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
+    </section> --}}
+    <!-- /Static Testimonials -->
+
+    <!-- Clients grid -->
+    {{-- <section id="trust" class="section is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number"><i class="material-icons">domain</i></div>
+                <h2 class="title section-title has-text-centered dark-text"> We build Trust.</h2>
+                <div class="subtitle has-text-centered">More than <b>900 Teams</b> use our product.</div>
             </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="{{asset('assets/frontend/images/analytics.png')}}" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Analytics</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
+
+            <div class="content-wrapper">
+                <!-- Grid -->
+                <div class="grid-clients five-grid">
+                    <div class="columns is-vcentered">
+                        <div class="column is-hidden-mobile"></div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/gutwork.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/phasekit.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/grubspot.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/taskbot.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/systek.svg')}}" alt=""></a>
+                        </div>
+                        <div class="column is-hidden-mobile"></div>
+                    </div>
+                    <div class="columns is-vcentered is-separator">
+                        <div class="column is-hidden-mobile"></div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/infinite.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/tribe.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/powerball.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/kromo.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/covenant.svg')}}" alt=""></a>
+                        </div>
+                        <div class="column is-hidden-mobile"></div>
+                    </div>
+                    <div class="columns is-vcentered is-separator">
+                        <div class="column is-hidden-mobile"></div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/bitbreaker.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/evently.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/proactive.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/transfuseio.svg')}}" alt=""></a>
+                        </div>
+                        <!-- Client -->
+                        <div class="column">
+                            <a><img class="client" src="{{asset('assets/frontend/images/logos/custom/livetalk.svg')}}" alt=""></a>
+                        </div>
+                        <div class="column is-hidden-mobile"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="{{asset('assets/frontend/images/affordable-pricing.png')}}" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Affordable Pricing</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
+                <!-- CTA -->
+                <div class="has-text-centered is-title-reveal pt-40 pb-40">
+                    <a href="landing-v3-pricing.html" class="button button-cta btn-align primary-btn raised rounded">Get started Now</a>
                 </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="{{asset('assets/frontend/images/easy-to-use.png')}}" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Easy To Use</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="{{asset('assets/frontend/images/free-support.png')}}" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Free Support</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="{{asset('assets/frontend/images/effectively-increase.png')}}" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Effectively Increase</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid gtco-logo-area">
-    <div class="container">
-        <div class="row">
-            <div class="col"><img src="{{asset('assets/frontend/images/logo1.png')}}" class="img-fluid" alt=""></div>
-            <div class="col"><img src="{{asset('assets/frontend/images/logo2.png')}}" class="img-fluid" alt=""></div>
-            <div class="col"><img src="{{asset('assets/frontend/images/logo3.png')}}" class="img-fluid" alt=""></div>
-            <div class="col"><img src="{{asset('assets/frontend/images/logo4.png')}}" class="img-fluid" alt=""></div>
-            <div class="col"><img src="{{asset('assets/frontend/images/logo5.png')}}" class="img-fluid" alt=""></div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid gtco-news" id="news">
-    <div class="container">
-        <h2>Latest News & Articles</h2>
-        <div class="owl-carousel owl-carousel2 owl-theme">
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/news1.jpg')}}" alt="">
-                    <div class="card-body text-left pr-0 pl-0">
-                        <h5>Aenean ultrices lorem quis blandit
-                            tempor urabitur accumsan. </h5>
-                        <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
-                            et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
-                            . . . </p>
-                        <a href="#">READ MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/news2.jpg')}}" alt="">
-                    <div class="card-body text-left pr-0 pl-0">
-                        <h5> Nam vel nisi eget odio pulvinar
-                            iaculis. Fusce aliquet. </h5>
-                        <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
-                            et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
-                            . . . </p>
-                        <a href="#">READ MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/news3.jpg')}}" alt="">
-                    <div class="card-body text-left pr-0 pl-0">
-                        <h5>Morbi faucibus odio sollicitudin
-                            risus scelerisque dignissim. </h5>
-                        <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
-                            et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
-                            . . . </p>
-                        <a href="#">READ MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/news1.jpg')}}" alt="">
-                    <div class="card-body text-left pr-0 pl-0">
-                        <h5>Aenean ultrices lorem quis blandit
-                            tempor urabitur accumsan. </h5>
-                        <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
-                            et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
-                            . . . </p>
-                        <a href="#">READ MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/news2.jpg')}}" alt="">
-                    <div class="card-body text-left pr-0 pl-0">
-                        <h5> Nam vel nisi eget odio pulvinar
-                            iaculis. Fusce aliquet. </h5>
-                        <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
-                            et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
-                            . . . </p>
-                        <a href="#">READ MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top" src="{{asset('assets/frontend/images/news3.jpg')}}" alt="">
-                    <div class="card-body text-left pr-0 pl-0">
-                        <h5>Morbi faucibus odio sollicitudin
-                            risus scelerisque dignissim. </h5>
-                        <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
-                            et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
-                            . . . </p>
-                        <a href="#">READ MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-                </div>
+                <!-- /CTA -->
             </div>
         </div>
-    </div>
-</div>
+    </section> --}}
+    <!-- Clients -->    
+@endsection
+
+@section('js-atas')
+    <script src="{{asset('assets/frontend/js/landingv2.js')}}"></script>
 @endsection

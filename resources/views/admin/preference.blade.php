@@ -17,7 +17,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Preference</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -96,6 +95,18 @@
                 <div class="form-group">
                     <label for="banner-image">Banner Image</label>
                     <input type="file" class="form-control-file" id="banner-image" name="banner_image">
+                </div>
+                <div class="form-group">
+                    <label for="link_video">Link Video</label>
+                    <input type="text" class="form-control" id="link_video" name="link_video" value="{{$preference->link_video}}">
+                </div>
+                <div class="form-group">
+                    <label for="video_description_in">Video Description *ina</label>
+                    <textarea type="text" class="form-control" id="video_description_in" name="video_description_in" rows="5">{{$preference->video_description_in}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="video_description_en">Video Description *eng</label>
+                    <textarea type="text" class="form-control" id="video_description_en" name="video_description_en" rows="5">{{$preference->video_description_en}}</textarea>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Submit">

@@ -24,6 +24,7 @@ class ProductController extends Controller
             'title' => 'required|min:3',
             'url' => 'required|min:5',
             'description' => 'required|min:8',
+            'description_en' => 'required|min:8',
             'image' => 'required|image'
         ]);
 
@@ -34,6 +35,7 @@ class ProductController extends Controller
         $product = new Product;
         $product->title = $request->title;
         $product->description = $request->description;
+        $product->description_en = $request->description_en;
         $product->url = $request->url;
         $image = $request->file('image');
         $imageLocation = "assets/image/product";
@@ -55,6 +57,7 @@ class ProductController extends Controller
             'title' => 'required|min:3',
             'url' => 'required|min:5',
             'description' => 'required|min:8',
+            'description_en' => 'required|min:8',
             'image' => 'image'
         ]);
 
@@ -66,6 +69,7 @@ class ProductController extends Controller
 
         $product->title = $request->title;
         $product->description = $request->description;
+        $product->description_en = $request->description_en;
         $product->url = $request->url;
         if($request->image != null){
             $oldImage = $product->image;

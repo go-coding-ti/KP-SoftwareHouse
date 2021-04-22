@@ -11,7 +11,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Blog - Create</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -58,9 +57,13 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">Title *ina</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{$blog->title}}">
                 </div>
+                <div class="form-group">
+                  <label for="title_eng">Title *eng</label>
+                  <input type="text" class="form-control" id="title_eng" name="title_en" value="{{$blog->title_en}}">
+              </div>
                 <div class="form-group">
                   <label for="blog_category_name">Category</label>
                   <select class="selectpicker form-control" data-live-search="true" id="blog_category_name" rows="3" name="id_blog_category" @if ($blog->category)
@@ -82,9 +85,13 @@
                     <input type="file" class="form-control-file" id="image" name="image">
                 </div>
                 <div class="form-group">
-                    <label for="description">Content</label>
+                    <label for="content_eng">Content *ina</label>
                     <textarea id="content" class="summernote" name="content">{!! $blog->content !!}</textarea>
                 </div>
+                <div class="form-group">
+                  <label for="content_eng">Content *eng</label>
+                  <textarea id="content_eng" class="summernote" name="content_en">{!! $blog->content_en !!}</textarea>
+              </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Submit">
                 </div>

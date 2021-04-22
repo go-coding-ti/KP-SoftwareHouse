@@ -26,6 +26,7 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'description' => 'required|min:8',
+            'description_en' => 'required|min:8',
             'expertise' =>'required',
             'instansi' =>'required',
             'image' => 'required|image'
@@ -38,6 +39,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->name = $request->name;
         $project->description = $request->description;
+        $project->description_en = $request->description_en;
         $project->instansi = $request->instansi;
         $image = $request->file('image');
         $imageLocation = "assets/image/project";
@@ -77,6 +79,7 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'description' => 'required|min:8',
+            'description_en' => 'required|min:8',
             'expertise' =>'required',
             'instansi' =>'required',
             'image' => 'image'
@@ -91,6 +94,7 @@ class ProjectController extends Controller
 
         $project->name = $request->name;
         $project->description = $request->description;
+        $project->description_en = $request->description_en;
         $project->instansi = $request->instansi;
         if($request->image != null){
             $oldImage = $project->image;

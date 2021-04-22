@@ -26,6 +26,9 @@ class PreferenceController extends Controller
             'banner_content_eng' => 'required|min:8',
             'address_ina' => 'required|min:8',
             'address_eng' => 'required|min:8',
+            'link_video' => 'required',
+            'video_description_in' => 'required|min:8',
+            'video_description_en' => 'required|min:8',
             'banner_image' => 'image'
         ]);
 
@@ -39,18 +42,25 @@ class PreferenceController extends Controller
         $preference->banner_content_eng = $request->banner_content_eng;
         $preference->address_ina = $request->address_ina;
         $preference->address_eng = $request->address_eng;
+        $preference->link_video = $request->link_video;
+        $preference->video_description_in = $request->video_description_in;
+        $preference->video_description_en = $request->video_description_en;
 
-        $image = $request->file('logo_image');
-        $imageLocation = "assets/image/preference";
-        $imageName = $image->getClientOriginalName();
-        $preference->logo_img = $imageLocation."/".$imageName;
-        $image->move($imageLocation, $preference->logo_img);
+        if($request->logo_image){
+            $image = $request->file('logo_image');
+            $imageLocation = "assets/image/preference";
+            $imageName = $image->getClientOriginalName();
+            $preference->logo_img = $imageLocation."/".$imageName;
+            $image->move($imageLocation, $preference->logo_img);    
+        }
 
-        $image = $request->file('banner_image');
-        $imageLocation = "assets/image/preference";
-        $imageName = $image->getClientOriginalName();
-        $preference->banner_img = $imageLocation."/".$imageName;
-        $image->move($imageLocation, $preference->banner_img);
+        if($request->banner_image){
+            $image = $request->file('banner_image');
+            $imageLocation = "assets/image/preference";
+            $imageName = $image->getClientOriginalName();
+            $preference->banner_img = $imageLocation."/".$imageName;
+            $image->move($imageLocation, $preference->banner_img);    
+        }
 
         $preference->save();
 

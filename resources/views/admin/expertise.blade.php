@@ -10,7 +10,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Expertise</h1>
-      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     @if (session()->has('statusInput'))
@@ -118,8 +117,12 @@
                   <input type="text" class="form-control" id="expertise-name" name="name" value="{{old('name')}}">
                 </div>
                 <div class="form-group">
-                  <label for="expertise-description">Expertise Description</label>
+                  <label for="expertise-description">Expertise Description *ina</label>
                   <textarea class="form-control" id="expertise-description" rows="3" name="description" value="{{old('description')}}"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="expertise-description_eng">Expertise Description *eng</label>
+                  <textarea class="form-control" id="expertise-description_eng" rows="3" name="description_en" value="{{old('description_en')}}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="expertise-image">Expertise Image</label>
@@ -152,8 +155,12 @@
                   <input type="text" class="form-control" id="show-expertise-name" readonly>
                 </div>
                 <div class="form-group">
-                  <label for="expertise-description">Expertise Description</label>
+                  <label for="expertise-description">Expertise Description *ina</label>
                   <textarea class="form-control" id="show-expertise-description" rows="3" readonly></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="expertise-description_eng">Expertise Description *eng</label>
+                  <textarea class="form-control" id="show-expertise-description_eng" rows="3" readonly></textarea>
                 </div>
                 <div class="form-group">
                     <label for="expertise-image">Expertise Image</label>
@@ -190,6 +197,10 @@
                 <div class="form-group">
                   <label for="expertise-description">Expertise Description</label>
                   <textarea class="form-control" id="edit-expertise-description" rows="3" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="expertise-description_eng">Expertise Description</label>
+                  <textarea class="form-control" id="edit-expertise-description_eng" rows="3" name="description_en"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="expertise-image">Expertise Image</label>
@@ -254,12 +265,14 @@
                         $("#show-expertise-name").val(result.expertise['name']);
                         $("#show-expertise-url").val(result.expertise['url']);
                         $('#show-expertise-description').val(result.expertise['description']);
+                        $('#show-expertise-description_eng').val(result.expertise['description_en']);
                         $("#show-expertise-image").attr("src", "/"+result.expertise['image']);
                         $('#showExpertise').modal('show');
                     }else{
                         $("#edit-expertise-name").val(result.expertise['name']);
                         $("#edit-expertise-url").val(result.expertise['url']);
                         $('#edit-expertise-description').val(result.expertise['description']);
+                        $('#edit-expertise-description_eng').val(result.expertise['description_en']);
                         $("#edit-form-expertise").attr("action", "expertise/"+result.expertise['id_expertise']);
                         $('#editExpertise').modal('show');
                     }                   
