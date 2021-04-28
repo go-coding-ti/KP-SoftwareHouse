@@ -117,7 +117,11 @@
                             <!-- Signup button -->
                             <div class="navbar-item">
                                 <a id="#signup-btn" href="{{route('changeLanguage')}}" class="button button-signup btn-outlined is-bold btn-align light-btn rounded raised">
-                                    {{$language}}
+                                    @if ($language == 'id')
+                                        EN
+                                    @else
+                                        ID
+                                    @endif
                                 </a>
                             </div>
                         </div>
