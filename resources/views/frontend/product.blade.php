@@ -140,7 +140,7 @@
                                         @endif
                                     </div>
                                     <div class="has-text-centered">
-                                        <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded">Discover Product</a>
+                                        <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded" href="{{$product->url}}">Discover Product</a>
                                     </div>
                                 </div>
                             </div>
