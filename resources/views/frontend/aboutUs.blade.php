@@ -84,7 +84,7 @@
                 <h2>Profile Company</h2>
                 <div class="title-divider"></div>
                 <div class="has-text-centered mt-40 mb-40 is-title-reveal">
-                    <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded">Download Company Profile (PDF)</a>
+                    <a href="{{asset($aboutUs->file_profile_company)}}" class="button button-cta is-bold btn-align primary-btn btn-outlined rounded">Download Company Profile (PDF)</a>
                 </div>
             </div>
             <!-- /Title -->
