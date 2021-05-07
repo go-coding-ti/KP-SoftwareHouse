@@ -61,7 +61,7 @@
                 <div class="columns is-vcentered is-multiline has-text-centered">
                     <!-- Icon block -->
                     @foreach ($expertises as $expertise)
-                        <div class="column is-6">
+                        <div class="column is-3">
                             <div class="startup-icon-box">
                                 <div class="is-icon-reveal">
                                     {{-- <i class="im im-icon-Bar-Chart"></i> --}}
@@ -79,9 +79,6 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-                <div class="has-text-centered is-title-reveal pt-20 pb-20">
-                    <a href="#" class="button button-cta primary-btn rounded raised">Learn more</a>
                 </div>
             </div>
         </div>
@@ -130,7 +127,7 @@
     </div> --}}
     <!-- /Feature highlight -->
 
-    <!-- Mockup section -->
+    <!-- Product section -->
     <section class="section section-light-grey is-medium">
         <div class="container">
             <!-- Title -->
@@ -143,115 +140,251 @@
             </div>
 
             <div class="content-wrapper">
-                <!-- Mockup / Video switcher -->
-                <div class="has-text-centered">
-                    <a href="{{route('product-fe')}}" id="show-video" class="button button-action btn-align rounded raised primary-btn">
-                        Check Our Product
-                    </a>
-                    <a id="show-mockup" class="button button-action btn-align rounded raised secondary-btn is-hidden">
-                        Beautiful and simple UI
-                    </a>
-                </div>
-                <div class="columns">
-                    <!-- Mockup -->
-                    <div id="mockup" class="column">
-                        <!-- Pulsating dots and custom tooltips -->
-                        <div class="mockup-dots is-hidden-touch">
-                            <div class="dot first is-dot-reveal"></div>
-                            <div class="dot-tip tip-first gelatine">Simple and modular UI</div>
-                            <div class="dot second is-dot-reveal"></div>
-                            <div class="dot-tip tip-second gelatine">Native responsiveness</div>
-                            <div class="dot third is-dot-reveal"></div>
-                            <div class="dot-tip tip-third gelatine">Clean and crispy design</div>
-                        </div>
-                        <!-- /Pulsating dots and custom tooltips -->
-
-                        <!-- Laptop mockup -->
-                        <img class="animated preFadeInUp fadeInUp" src="{{asset('assets/frontend/images/illustrations/UI/app-mockup.png')}}" alt="">
-                    </div>
-                    <!-- /Mockup -->
-
-                    <!-- Youtube Video player -->
-                    {{-- <div id="video" class="column is-6 is-offset-3 animated preFadeInUp fadeInUp is-hidden pt-80 pb-80">
-                        <div class="side-block">
-                            <div class="background-wrapper">
-                                <div id="video-embed" class="video-wrapper" data-url="https://www.youtube.com/watch?v=iaj8ktgL3BY">
-                                    <div class="video-overlay"></div>
-                                    <div class="playbutton">
-                                        <div class="icon-play">
-                                            <i class="im im-icon-Play-Music"></i>
+                <div class="columns is-vcentered is-multiline">    
+                    <!-- Card -->
+                    @foreach ($products as $product)
+                        <div class="column is-4">
+                            <div class="card ressource-card">
+                                <div class="card-image">
+                                    <div class="card-image-overlay"></div>
+                                    <figure class="image is-4by3 zoomOut">
+                                        <img src="{{asset($product->image)}}" alt="">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-content">
+                                            <a href="#" class="color-primary is-handwritten">{{$product->title}}</a>
+                                            @if (session()->get('language') == 'id')
+                                                <p class="subtitle is-6">{{$product->description}}</p>
+                                            @else
+                                                <p class="subtitle is-6">{{$product->description_en}}</p>
+                                            @endif
                                         </div>
+                                    </div>
+                                    <div class="has-text-centered">
+                                        @php
+                                            $productname = \App\GlobalFunction::spaceChange(1,$product->title);
+                                            if($product->id_page){
+                                                $href = route('page-product-fe',$productname);
+                                            }else{
+                                                $href = $product->url;
+                                            }
+                                        @endphp
+                                        <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded" href="{{$href}}">Discover Product</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
-                    <!-- /Youtube Video player -->
+                    @endforeach
+                    <!-- /Card -->
                 </div>
             </div>
-
+        </div>
+        <div style="margin-top: 25px;" class="has-text-centered">
+            <a href="{{route('product-fe')}}" id="show-video" class="button button-action btn-align rounded raised primary-btn">
+                Check Our Product
+            </a>
+            <a id="show-mockup" class="button button-action btn-align rounded raised secondary-btn is-hidden">
+                Beautiful and simple UI
+            </a>
         </div>
     </section>
-    <!-- /Mockup section -->
+    <!-- /Product section -->
 
-        <!-- /UI Feature -->
-        <section class="section section-feature-grey is-medium">
-            <div class="container">
-                <!-- Title -->
-                <div class="section-title-wrapper">
-                    <div class="bg-number">4</div>
-                    <h2 class="title section-title has-text-centered dark-text"> Get to Know More</h2>
-                    <div class="subtitle has-text-centered is-tablet-padded">
-                        Our Video
-                    </div>
+    <!-- Project section -->
+    <section class="section section-feature-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">3</div>
+                <h2 class="title section-title has-text-centered dark-text"> Get our Project</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    You can immediatly check our project
                 </div>
-                <div class="columns is-vcentered">
-                    <div class="column is-5 is-offset-1">
-                        <!-- Video block -->
-                        <div class="side-block is-title-reveal">
-                            <div class="background-wrapper">
-                                <div id="video-embed" class="video-wrapper" data-url="{!! $preference[0]->link_video !!}">
-                                    <div class="video-overlay"></div>
-                                    <div class="playbutton">
-                                        <div class="icon-play">
-                                            <i class="im im-icon-Play-Music"></i>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="columns is-vcentered is-multiline">    
+                    <!-- Card -->
+                    @foreach ($projects as $project)
+                        <div class="column is-4">
+                            <div class="card ressource-card">
+                                <div class="card-image">
+                                    <div class="card-image-overlay"></div>
+                                    <figure class="image is-4by3 zoomOut">
+                                        <img src="{{asset($project->image)}}" alt="">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-content">
+                                            <a href="#" class="color-primary is-handwritten">{{$project->title}}</a>
+                                            @if (session()->get('language') == 'id')
+                                                <p class="subtitle is-6">{{$project->description}}</p>
+                                            @else
+                                                <p class="subtitle is-6">{{$project->description_en}}</p>
+                                            @endif
                                         </div>
+                                    </div>
+                                    <div class="has-text-centered">
+                                        <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded" href="#">Discover Project</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- /Video block -->
-                    </div>
-        
-                    <div class="column is-4 is-offset-1">
-                        <!-- Title -->
-                        <div class="title-wrapper">
-                            <h6 class="top-subtitle">Watch the video and</h6>
-                            <h2 class="title is-landing quick-feature">
-                                Get started fast
-                            </h2>
-                            <div class="title-divider is-small"></div>
-                        </div>
-                        <!-- /Title -->
-        
-                        <span class="section-feature-description">
-                            @if (session()->get('language') == 'id')
-                                {!! $preference[0]->video_description_in !!}
-                            @else
-                                {!! $preference[0]->video_description_en !!}
-                            @endif
-                        </span>
-                        <div class="pt-10 pb-10">
-                            <a href="#" class="button btn-align btn-more is-link color-primary">
-                                Learn more <i class="sl sl-icon-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-        
+                    @endforeach
+                    <!-- /Card -->
                 </div>
             </div>
-        </section>
-        <!-- /UI Feature -->
+        </div>
+        <div style="margin-top: 25px;" class="has-text-centered">
+            <a href="{{route('project-fe')}}" id="show-video" class="button button-action btn-align rounded raised primary-btn">
+                Check Our Project
+            </a>
+            <a id="show-mockup" class="button button-action btn-align rounded raised secondary-btn is-hidden">
+                Beautiful and simple UI
+            </a>
+        </div>
+    </section>
+    <!-- /Project section -->
+
+    <!-- /UI Feature -->
+    <section class="section section-light-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper">
+                <div class="bg-number">4</div>
+                <h2 class="title section-title has-text-centered dark-text"> Get to Know More</h2>
+                <div class="subtitle has-text-centered is-tablet-padded">
+                    Our Video
+                </div>
+            </div>
+            <div class="columns is-vcentered">
+                <div class="column is-5 is-offset-1">
+                    <!-- Video block -->
+                    <div class="side-block is-title-reveal">
+                        <div class="background-wrapper">
+                            <div id="video-embed" class="video-wrapper" data-url="{!! $preference[0]->link_video !!}">
+                                <div class="video-overlay"></div>
+                                <div class="playbutton">
+                                    <div class="icon-play">
+                                        <i class="im im-icon-Play-Music"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Video block -->
+                </div>
+    
+                <div class="column is-4 is-offset-1">
+                    <!-- Title -->
+                    <div class="title-wrapper">
+                        <h6 class="top-subtitle">Watch the video and</h6>
+                        <h2 class="title is-landing quick-feature">
+                            Get started fast
+                        </h2>
+                        <div class="title-divider is-small"></div>
+                    </div>
+                    <!-- /Title -->
+    
+                    <span class="section-feature-description">
+                        @if (session()->get('language') == 'id')
+                            {!! $preference[0]->video_description_in !!}
+                        @else
+                            {!! $preference[0]->video_description_en !!}
+                        @endif
+                    </span>
+                    <div class="pt-10 pb-10">
+                        <a href="#" class="button btn-align btn-more is-link color-primary">
+                            Learn more <i class="sl sl-icon-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+    <!-- /UI Feature -->
+
+    <!-- Clients grid -->
+    <section id="trust" class="section section-feature-grey is-medium">
+        <div class="container">
+            <!-- Title -->
+            <div class="section-title-wrapper has-text-centered">
+                <div class="bg-number"><i class="material-icons">domain</i></div>
+                <h2 class="section-title-landing"> We build Trust with.</h2>
+            </div>
+    
+            <div class="content-wrapper">
+                <!-- Grid -->
+                <div class="">
+                        <div class="columns is-vcentered is-multiline">
+                            <div class="column"></div>
+                            @foreach ($instansis as $instansi)
+                                <div class="column is-2">
+                                    <a href="{{$instansi->url}}"><img style="max-height: 100px; max-width: 100px;" class="client" src="{{$instansi->image}}" alt=""></a>
+                                </div>
+                            @endforeach
+                            <div class="column"></div>
+                        </div>
+                        {{-- <div class="columns is-vcentered is-separator">
+                            <div class="column"></div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/infinite.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/tribe.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/powerball.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/kromo.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/covenant.svg" alt=""></a>
+                            </div>
+                            <div class="column"></div>
+                        </div>
+                        <div class="columns is-vcentered is-separator">
+                            <div class="column"></div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/bitbreaker.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/evently.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/proactive.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/transfuseio.svg" alt=""></a>
+                            </div>
+                            <!-- Client -->
+                            <div class="column">
+                                <a><img class="client" src="assets/images/logos/custom/livetalk.svg" alt=""></a>
+                            </div>
+                            <div class="column"></div>
+                        </div> --}}
+                </div>
+                <!-- CTA -->
+                <!-- /CTA -->
+            </div>
+        </div>
+    </section>
+    <!-- Clients -->
+    
                 
     <!-- Features section -->
     {{-- <section class="section section-feature-grey is-medium">

@@ -122,7 +122,7 @@
                             <div class="card card-md hover-inset has-text-centered">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="{{asset($product->image)}}" alt="">
+                                        <img style="padding: 10px;" src="{{asset($product->image)}}" alt="">
                                     </figure>
                                 </div>
                                 <div class="card-title">
@@ -140,7 +140,15 @@
                                         @endif
                                     </div>
                                     <div class="has-text-centered">
-                                        <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded" href="{{$product->url}}">Discover Product</a>
+                                        @php
+                                            $productname = \App\GlobalFunction::spaceChange(1,$product->title);
+                                            if($product->id_page){
+                                                $href = route('page-product-fe',$productname);
+                                            }else{
+                                                $href = $product->url;
+                                            }
+                                        @endphp
+                                        <a class="button button-cta is-bold btn-align primary-btn btn-outlined rounded" href="{{$href}}">Discover Product</a>
                                     </div>
                                 </div>
                             </div>

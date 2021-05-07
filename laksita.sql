@@ -59,6 +59,28 @@ CREATE TABLE `password_resets` (
 
 /*Data for the table `password_resets` */
 
+/*Table structure for table `tb_about_us` */
+
+DROP TABLE IF EXISTS `tb_about_us`;
+
+CREATE TABLE `tb_about_us` (
+  `id_about_us` int(11) NOT NULL AUTO_INCREMENT,
+  `description_ina` text DEFAULT NULL,
+  `description_eng` text DEFAULT NULL,
+  `file_profile_company` varchar(255) DEFAULT NULL,
+  `link_video` varchar(255) DEFAULT NULL,
+  `video_description_ina` text DEFAULT NULL,
+  `video_description_eng` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_about_us`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tb_about_us` */
+
+insert  into `tb_about_us`(`id_about_us`,`description_ina`,`description_eng`,`file_profile_company`,`link_video`,`video_description_ina`,`video_description_eng`,`created_at`,`updated_at`) values 
+(1,'<p>halo<b> dunia</b><p><b><br></b></p><p><img style=\"width: 205px;\" data-filename=\"Lambang_Kabupaten_Badung.png\" src=\"http://localhost:8000/storage/image/about-us/company-profile/6094d5b51e7e03.32548735.png\"><b><br></b></p><p></p><p></p><p></p></p>\n','<p><img style=\"width: 128px;\" data-filename=\"128px-Lambang_Kota_Denpasar_(1).png\" src=\"http://localhost:8000/storage/image/about-us/company-profile/6094d5e7e88944.94139175.png\"><p><br></p><p>hai <b>world</b></p><p><b><br></b></p><p></p><p></p><p></p></p>\n','assets/about-us/profile-company/Laporan TA.pdf','https://www.youtube.com/watch?v=fEx-N55-G_8','ina indonesia','eng this','2021-05-07 12:24:02','2021-05-07 05:53:43');
+
 /*Table structure for table `tb_blog` */
 
 DROP TABLE IF EXISTS `tb_blog`;
@@ -123,6 +145,28 @@ insert  into `tb_blog_category`(`id_blog_category`,`name`,`name_en`,`created_at`
 (16,'Artificial Inelegent',NULL,'2021-03-12 03:20:51','2021-03-31 13:16:02','2021-03-31 13:16:02'),
 (17,'Teknologi Terbaru',NULL,'2021-03-26 13:59:51','2021-03-31 13:16:36','2021-03-31 13:16:36'),
 (18,'Marketing','Marketing','2021-04-01 15:39:50','2021-04-01 15:39:50',NULL);
+
+/*Table structure for table `tb_company_profile_img` */
+
+DROP TABLE IF EXISTS `tb_company_profile_img`;
+
+CREATE TABLE `tb_company_profile_img` (
+  `id_company_profile_image` int(11) NOT NULL AUTO_INCREMENT,
+  `id_about_us` int(11) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `type_content` enum('id','en') DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_company_profile_image`),
+  KEY `id_about_us` (`id_about_us`),
+  CONSTRAINT `tb_company_profile_img_ibfk_1` FOREIGN KEY (`id_about_us`) REFERENCES `tb_about_us` (`id_about_us`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tb_company_profile_img` */
+
+insert  into `tb_company_profile_img`(`id_company_profile_image`,`id_about_us`,`image`,`type_content`,`created_at`,`updated_at`) values 
+(1,1,'/image/about-us/company-profile/6094d5b51e7e03.32548735.png','id','2021-05-07 05:52:53','2021-05-07 05:52:53'),
+(3,1,'/image/about-us/company-profile/6094d5e7e88944.94139175.png','en','2021-05-07 05:53:43','2021-05-07 05:53:43');
 
 /*Table structure for table `tb_detail_blog_category` */
 
@@ -198,6 +242,30 @@ insert  into `tb_detail_expertise`(`id_detail_expertise`,`id_project`,`id_expert
 (18,1,2,'2021-03-26 13:53:49','2021-03-26 13:53:49',NULL),
 (19,7,3,'2021-03-31 16:22:55','2021-03-31 16:22:55',NULL);
 
+/*Table structure for table `tb_detail_instansi` */
+
+DROP TABLE IF EXISTS `tb_detail_instansi`;
+
+CREATE TABLE `tb_detail_instansi` (
+  `id_detail_intansi` int(11) NOT NULL AUTO_INCREMENT,
+  `id_product` int(11) DEFAULT NULL,
+  `id_instansi` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_detail_intansi`),
+  KEY `id_product` (`id_product`),
+  KEY `id_instansi` (`id_instansi`),
+  CONSTRAINT `tb_detail_instansi_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `tb_product` (`id_product`),
+  CONSTRAINT `tb_detail_instansi_ibfk_2` FOREIGN KEY (`id_instansi`) REFERENCES `tb_instansi` (`id_instansi`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tb_detail_instansi` */
+
+insert  into `tb_detail_instansi`(`id_detail_intansi`,`id_product`,`id_instansi`,`created_at`,`updated_at`) values 
+(6,19,1,'2021-05-06 17:13:51','2021-05-06 17:13:51'),
+(7,19,2,'2021-05-06 17:13:51','2021-05-06 17:13:51'),
+(8,19,3,'2021-05-06 17:13:51','2021-05-06 17:13:51');
+
 /*Table structure for table `tb_expertise` */
 
 DROP TABLE IF EXISTS `tb_expertise`;
@@ -222,6 +290,28 @@ insert  into `tb_expertise`(`id_expertise`,`name`,`description`,`description_en`
 (3,'Software Development','Pengembangan perangkat lunak adalah proses memahami, menentukan, merancang, memprogram, mendokumentasikan, menguji, dan memperbaiki bug yang terlibat dalam pembuatan dan pemeliharaan.','Software development is the process of conceiving, specifying, designing, programming, documenting, testing, and bug fixing involved in creating and maintaining applications, frameworks, or other software components.','assets/image/expertise/software_dev.jpg','2021-03-31 13:38:15','2021-04-05 11:16:23',NULL),
 (4,'IT Consultant','Konsultan IT bekerja dalam kemitraan dengan klien, menasihati mereka bagaimana menggunakan teknologi informasi untuk memenuhi tujuan bisnis mereka atau mengatasi masalah.','IT consultant is to work in partnership with clients, advising them how to use information technology in order to meet their business objectives or overcome problems.','assets/image/expertise/consult.jpg','2021-03-31 13:56:37','2021-04-05 11:15:51',NULL);
 
+/*Table structure for table `tb_instansi` */
+
+DROP TABLE IF EXISTS `tb_instansi`;
+
+CREATE TABLE `tb_instansi` (
+  `id_instansi` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_instansi` varchar(50) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_instansi`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tb_instansi` */
+
+insert  into `tb_instansi`(`id_instansi`,`nama_instansi`,`image`,`url`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,'Kabupaten Badung','assets/image/intansi/Lambang_Kabupaten_Badung.png','https://badungkab.go.id/','2021-05-06 14:36:45','2021-05-06 14:38:35',NULL),
+(2,'Kabupaten Karangasem','assets/image/intansi/128px-Lambang_Kabupaten_Karangasem.png','http://www.karangasemkab.go.id/','2021-05-06 14:40:53','2021-05-06 14:40:53',NULL),
+(3,'Kabupaten Denpasar','assets/image/intansi/128px-Lambang_Kota_Denpasar_(1).png','https://www.denpasarkota.go.id/','2021-05-06 14:42:05','2021-05-06 14:42:05',NULL);
+
 /*Table structure for table `tb_menu` */
 
 DROP TABLE IF EXISTS `tb_menu`;
@@ -237,7 +327,7 @@ CREATE TABLE `tb_menu` (
   PRIMARY KEY (`id_menu`),
   KEY `id_page` (`id_page`),
   CONSTRAINT `tb_menu_ibfk_1` FOREIGN KEY (`id_page`) REFERENCES `tb_page` (`id_page`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_menu` */
 
@@ -248,7 +338,9 @@ insert  into `tb_menu`(`id_menu`,`name`,`id_page`,`url`,`created_at`,`updated_at
 (5,'Project',NULL,'/project','2021-04-05 08:52:19','2021-04-05 08:52:19',NULL),
 (6,'Demo Project',NULL,'/demo','2021-04-05 08:52:55','2021-04-05 08:52:55',NULL),
 (7,'News',NULL,'/news','2021-04-05 08:53:27','2021-04-05 08:53:27',NULL),
-(8,'Menu tambahan 1',2,NULL,'2021-04-10 11:01:34','2021-04-22 14:19:33','2021-04-22 14:19:33');
+(8,'Menu tambahan 1',2,NULL,'2021-04-10 11:01:34','2021-04-22 14:19:33','2021-04-22 14:19:33'),
+(9,'menu101',2,NULL,'2021-04-29 08:13:06','2021-05-06 17:56:44','2021-05-06 17:56:44'),
+(10,'About Us',NULL,'/about-us','2021-05-06 17:57:04','2021-05-06 17:57:04',NULL);
 
 /*Table structure for table `tb_page` */
 
@@ -269,7 +361,7 @@ CREATE TABLE `tb_page` (
 /*Data for the table `tb_page` */
 
 insert  into `tb_page`(`id_page`,`title`,`content`,`title_en`,`content_en`,`created_at`,`updated_at`,`deleted_at`) values 
-(2,'Page 1','<p>Page ini hanya untuk kebutuhan menu dan sub menu <b>2</b><p><img data-filename=\"product.png\" style=\"width: 25%;\" src=\"http://localhost:8000/storage/image/page/Page%201/ina/606aa4eab058d1.12871722.png\"><br></p><p></p><p></p></p>\n','Page 1','<p>This content just for fun 3<p><img data-filename=\"blog.png\" style=\"width: 696px;\" src=\"http://localhost:8000/storage/image/page/Page%201/ina/606a9e890ca873.13507062.png\"><br></p><p></p></p>\n','2021-04-05 05:22:17','2021-04-05 05:51:49',NULL);
+(2,'Page 1','<p>Page ini hanya untuk kebutuhan menu dan sub menu <b>2</b><p><img data-filename=\"product.png\" style=\"width: 25%;\" src=\"http://localhost:8000/storage/image/page/Page%201/ina/606aa4eab058d1.12871722.png\"></p><p><br></p><p style=\"text-align: center; \">Aplikasi terintegrasi bayar uang kuliah merupakan aplikasi manajemen pembayaran <b><font color=\"#000000\" style=\"background-color: rgb(255, 255, 0);\">UKT, SPP</font></b>, dan biaya perkuliahan lainnya. ASTA BAYU memfasilitasi langsung dengan salah satu bank nasional sehingga memudahkan mahasiswa dalam melakukan pembayaran.</p><p></p><p></p><p></p></p>\n','Page 1','<p>This content just for fun 3<p><img data-filename=\"blog.png\" style=\"width: 696px;\" src=\"http://localhost:8000/storage/image/page/Page%201/ina/606a9e890ca873.13507062.png\"><br></p><p></p></p>\n','2021-04-05 05:22:17','2021-04-29 08:15:27',NULL);
 
 /*Table structure for table `tb_page_image` */
 
@@ -332,31 +424,36 @@ CREATE TABLE `tb_product` (
   `description_en` text DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
+  `id_page` int(11) DEFAULT NULL,
+  `status_home` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id_product`),
+  KEY `id_page` (`id_page`),
+  CONSTRAINT `tb_product_ibfk_1` FOREIGN KEY (`id_page`) REFERENCES `tb_page` (`id_page`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_product` */
 
-insert  into `tb_product`(`id_product`,`title`,`description`,`description_en`,`image`,`url`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,'SIM Menara1','ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/g1.PNG','https://www.menara.com','2021-02-25 14:16:34','2021-03-31 13:10:57','2021-03-31 13:10:57'),
-(2,'SIM Perpustakaan','ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/_1.jpg','https://www.perpustakaan.com','2021-02-26 04:34:07','2021-03-31 13:11:00','2021-03-31 13:11:00'),
-(3,'SIM Koperasi','ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/002.png','https://www.koperasi.com','2021-02-26 05:26:16','2021-03-31 13:10:53','2021-03-31 13:10:53'),
-(4,'SIM Sekolah','Ini Sekolah Ini Sekolah Ini Sekolah Ini Sekolah','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/fig2.jpeg','https://www.sekolah.com','2021-02-26 05:27:55','2021-03-31 13:11:03','2021-03-31 13:11:03'),
-(5,'SIM Semarapura','ini deskirpsi ini deskirpsi  ini deskirpsi ini deskirpsi ini deskirpsi ini deskirpsi ini deskirpsi ini deskirpsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/-1eart.jpg','https://www.semarapura.com','2021-02-26 08:12:30','2021-03-31 13:11:06','2021-03-31 13:11:06'),
-(6,'Produk 1','Indo \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/1805551001_Pertemuan 1.png','https://produk1.com','2021-03-26 13:37:08','2021-03-31 13:10:50','2021-03-31 13:10:50'),
-(7,'ASTA MANIK','Aplikasi terintegrasi manajemen akademik adalah aplikasi terintegerasi manajemen akademik yang mengatur seluruh proses akademik yang ada  mulai dari manajemen master data, manajemen matakuliah dan kurikulum, transaksi akademik persemester, dan transaksi akademik mahasiswa.','Academic management integrated application','assets/image/product/book1.png','https://www.laksitastartup.com/','2021-03-31 15:46:19','2021-04-22 10:47:08',NULL),
-(8,'ASTA BAYU','Aplikasi terintegrasi bayar uang kuliah merupakan aplikasi manajemen pembayaran UKT, SPP, dan biaya perkuliahan lainnya. ASTA BAYU memfasilitasi langsung dengan salah satu bank nasional sehingga memudahkan mahasiswa dalam melakukan pembayaran.','Integrated application to pay tuition fees','assets/image/product/asta-bayu.jpg','https://www.laksitastartup.com/','2021-03-31 15:53:57','2021-04-22 10:45:02',NULL),
-(9,'ASWIN','Aplikasi wisuda online merupakan aplikasi manajemen yang mengatur seluruh proses dan tahapan widuda. Aswin terdiri dari menu setting periode wisuda, pengaturan gelar, pengaturan penandatangan ijazah, manajemen syarat dan validasi syarat wisuda, hingga pencetakan ijazah dan skpi mahasiswa.','Online graduation application','assets/image/product/graduation.png','https://www.laksitastartup.com/','2021-03-31 16:00:52','2021-04-22 10:50:39',NULL),
-(10,'ASTA KALI','Aplikasi perpustakaan online merupakan aplikasi yang memudahkan dalam menangani pengelolaan pustaka pada perpustakaan, peminjaman buku, dan pencatatan kunjungan perpustakaan baik secara fisik maupun online.','Online library appliccation','assets/image/product/asta-kali.jpg','https://www.laksitastartup.com/','2021-03-31 16:04:25','2021-04-22 10:48:40',NULL),
-(11,'SAMA WEDA','Sistem Manajemen Website Terintegrasi merupakan aplikasi manajemen yang mengatur dan mengelola konten atau isi dari website universitas. Selain konten, samadewa dapat mengatur profil dari universitas hingga menambahkan pengumuman yang ingin ditampilkan dalam website.','Integrated Website Management System','assets/image/product/sama-weda.png','https://www.laksitastartup.com/','2021-03-31 16:12:58','2021-04-22 10:52:36',NULL),
-(12,'SMRTI','Sistem manajemen registrasi terintegrasi memfasilitasi proses pendaftaran dan verifikasi mahasiswa baru, terintegrasi dengan sistem akademik dan pembayaran uang kuliah yang memungkinkan mahasiswa untuk dapat langsung mengisi KRS segera setelah diterima di perguruan tinggi.','Integrated registration management system','assets/image/product/smrti.jpg','https://www.laksitastartup.com/','2021-03-31 16:15:27','2021-04-22 10:54:53',NULL),
-(13,'SENAPATI','Skripsi, Kuliah Kerja Nyata dan Kerja Praktik merupakan aplikasi yang bertugas dalam memanajemen proses pengajuan skripsi mahasiswa, proses pendaftaran hingga pemberian nilai terkait Kuliah Kerja Nyata dan Kerja Praktik yang dilakukan mahasiswa','Application of Skripsi, KKN and KP','assets/image/product/graduation.png','https://www.laksitastartup.com/','2021-03-31 16:17:03','2021-04-22 11:05:33',NULL),
-(14,'SIMBKD','Sistem Informasi Manajemen Beban Kerja Dosen merupakan sistem yangn tidak hanya berfunsi untuk mencatat kinerja dosen dalam bidang Tri Darma Perguruan Tinggi, tetapi juga mengelola biodata dosen dan riwayat pekerjaan dosen.','Lecturer Workload Management Information System','assets/image/product/asta-kali.jpg','https://www.laksitastartup.com/','2021-04-22 11:12:26','2021-04-22 11:12:26',NULL),
-(15,'SIMDOS','Sistem Informasi Manajemen Dosen merupakan sistem yang tidak hanya berfungsi sebagai pencatatan profil dan riwayat profesi dosen, tetapi juga berperan  sebagai sistem yang merekam kinerja dosen dalam bidang Tri Darma Perguruan Tinggi, yaitu Pendidikan, Penelitian, dan Pengabdian Masyarakat.','Lecturer Management Information System','assets/image/product/book1.png','https://www.laksitastartup.com/','2021-04-22 11:17:52','2021-04-22 11:17:52',NULL),
-(16,'SIMPEG','Simstem Informasi Manajemen Kepegawaian merupakan aplikasi manajemen kepegawaian di Universitas mulai dari manajemen riwayat dan data master pegawai, manajemen absensi pegawai, hingga manajemen Sasaran Kinerja Pegawai(SKP)','Personnel Management Information System','assets/image/product/simpeg.png','https://www.laksitastartup.com/','2021-04-22 11:30:48','2021-04-22 11:30:48',NULL);
+insert  into `tb_product`(`id_product`,`title`,`description`,`description_en`,`image`,`url`,`id_page`,`status_home`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,'SIM Menara1','ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/g1.PNG','https://www.menara.com',NULL,1,'2021-02-25 14:16:34','2021-03-31 13:10:57','2021-03-31 13:10:57'),
+(2,'SIM Perpustakaan','ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/_1.jpg','https://www.perpustakaan.com',NULL,1,'2021-02-26 04:34:07','2021-03-31 13:11:00','2021-03-31 13:11:00'),
+(3,'SIM Koperasi','ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang ini deskripsi yang panjang','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/002.png','https://www.koperasi.com',NULL,1,'2021-02-26 05:26:16','2021-03-31 13:10:53','2021-03-31 13:10:53'),
+(4,'SIM Sekolah','Ini Sekolah Ini Sekolah Ini Sekolah Ini Sekolah','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/fig2.jpeg','https://www.sekolah.com',NULL,0,'2021-02-26 05:27:55','2021-03-31 13:11:03','2021-03-31 13:11:03'),
+(5,'SIM Semarapura','ini deskirpsi ini deskirpsi  ini deskirpsi ini deskirpsi ini deskirpsi ini deskirpsi ini deskirpsi ini deskirpsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/-1eart.jpg','https://www.semarapura.com',NULL,0,'2021-02-26 08:12:30','2021-03-31 13:11:06','2021-03-31 13:11:06'),
+(6,'Produk 1','Indo \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/product/1805551001_Pertemuan 1.png','https://produk1.com',NULL,0,'2021-03-26 13:37:08','2021-03-31 13:10:50','2021-03-31 13:10:50'),
+(7,'ASTA MANIK','Aplikasi terintegrasi manajemen akademik adalah aplikasi terintegerasi manajemen akademik yang mengatur seluruh proses akademik yang ada  mulai dari manajemen master data, manajemen matakuliah dan kurikulum, transaksi akademik persemester, dan transaksi akademik mahasiswa.','Academic management integrated application','assets/image/product/book1.png','https://www.laksitastartup.com/',NULL,0,'2021-03-31 15:46:19','2021-04-22 10:47:08',NULL),
+(8,'ASTA BAYU','Aplikasi terintegrasi bayar uang kuliah merupakan aplikasi manajemen pembayaran UKT, SPP, dan biaya perkuliahan lainnya. ASTA BAYU memfasilitasi langsung dengan salah satu bank nasional sehingga memudahkan mahasiswa dalam melakukan pembayaran.','Integrated application to pay tuition fees','assets/image/product/asta-bayu.jpg','https://www.laksitastartup.com/',NULL,0,'2021-03-31 15:53:57','2021-04-22 10:45:02',NULL),
+(9,'ASWIN','Aplikasi wisuda online merupakan aplikasi manajemen yang mengatur seluruh proses dan tahapan widuda. Aswin terdiri dari menu setting periode wisuda, pengaturan gelar, pengaturan penandatangan ijazah, manajemen syarat dan validasi syarat wisuda, hingga pencetakan ijazah dan skpi mahasiswa.','Online graduation application','assets/image/product/graduation.png','https://www.laksitastartup.com/',NULL,0,'2021-03-31 16:00:52','2021-04-22 10:50:39',NULL),
+(10,'ASTA KALI','Aplikasi perpustakaan online merupakan aplikasi yang memudahkan dalam menangani pengelolaan pustaka pada perpustakaan, peminjaman buku, dan pencatatan kunjungan perpustakaan baik secara fisik maupun online.','Online library appliccation','assets/image/product/asta-kali.jpg','https://www.laksitastartup.com/',NULL,0,'2021-03-31 16:04:25','2021-04-22 10:48:40',NULL),
+(11,'SAMA WEDA','Sistem Manajemen Website Terintegrasi merupakan aplikasi manajemen yang mengatur dan mengelola konten atau isi dari website universitas. Selain konten, samadewa dapat mengatur profil dari universitas hingga menambahkan pengumuman yang ingin ditampilkan dalam website.','Integrated Website Management System','assets/image/product/sama-weda.png','https://www.laksitastartup.com/',NULL,0,'2021-03-31 16:12:58','2021-04-22 10:52:36',NULL),
+(12,'SMRTI','Sistem manajemen registrasi terintegrasi memfasilitasi proses pendaftaran dan verifikasi mahasiswa baru, terintegrasi dengan sistem akademik dan pembayaran uang kuliah yang memungkinkan mahasiswa untuk dapat langsung mengisi KRS segera setelah diterima di perguruan tinggi.','Integrated registration management system','assets/image/product/smrti.jpg','https://www.laksitastartup.com/',NULL,0,'2021-03-31 16:15:27','2021-04-22 10:54:53',NULL),
+(13,'SENAPATI','Skripsi, Kuliah Kerja Nyata dan Kerja Praktik merupakan aplikasi yang bertugas dalam memanajemen proses pengajuan skripsi mahasiswa, proses pendaftaran hingga pemberian nilai terkait Kuliah Kerja Nyata dan Kerja Praktik yang dilakukan mahasiswa','Application of Skripsi, KKN and KP','assets/image/product/graduation.png','https://www.laksitastartup.com/',NULL,0,'2021-03-31 16:17:03','2021-04-22 11:05:33',NULL),
+(14,'SIMBKD','Sistem Informasi Manajemen Beban Kerja Dosen merupakan sistem yangn tidak hanya berfunsi untuk mencatat kinerja dosen dalam bidang Tri Darma Perguruan Tinggi, tetapi juga mengelola biodata dosen dan riwayat pekerjaan dosen.','Lecturer Workload Management Information System','assets/image/product/asta-kali.jpg','https://www.laksitastartup.com/',NULL,1,'2021-04-22 11:12:26','2021-04-22 11:12:26',NULL),
+(15,'SIMDOS','Sistem Informasi Manajemen Dosen merupakan sistem yang tidak hanya berfungsi sebagai pencatatan profil dan riwayat profesi dosen, tetapi juga berperan  sebagai sistem yang merekam kinerja dosen dalam bidang Tri Darma Perguruan Tinggi, yaitu Pendidikan, Penelitian, dan Pengabdian Masyarakat.','Lecturer Management Information System','assets/image/product/book1.png','https://www.laksitastartup.com/',NULL,1,'2021-04-22 11:17:52','2021-04-22 11:17:52',NULL),
+(16,'SIMPEG','Simstem Informasi Manajemen Kepegawaian merupakan aplikasi manajemen kepegawaian di Universitas mulai dari manajemen riwayat dan data master pegawai, manajemen absensi pegawai, hingga manajemen Sasaran Kinerja Pegawai(SKP)','Personnel Management Information System','assets/image/product/simpeg.png','https://www.laksitastartup.com/',NULL,1,'2021-04-22 11:30:48','2021-04-22 11:30:48',NULL),
+(19,'1test','testtest','testtest','assets/image/product/Lambang_Kabupaten_Badung.png',NULL,2,1,'2021-05-06 16:18:57','2021-05-06 16:18:57',NULL);
 
 /*Table structure for table `tb_project` */
 
@@ -369,6 +466,7 @@ CREATE TABLE `tb_project` (
   `description_en` text DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
   `instansi` varchar(50) DEFAULT NULL,
+  `status_home` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -377,14 +475,14 @@ CREATE TABLE `tb_project` (
 
 /*Data for the table `tb_project` */
 
-insert  into `tb_project`(`id_project`,`name`,`description`,`description_en`,`image`,`instansi`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,'Sidik2','ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi','Edited Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','assets/image/project/tele.png','MEDIKBUD','2021-02-27 08:12:32','2021-03-31 13:11:15','2021-03-31 13:11:15'),
-(2,'SIKOP','ini deskirpsi ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/product.png',NULL,'2021-02-27 08:56:32','2021-02-27 08:57:09','2021-02-27 08:57:09'),
-(3,'SIKOP','ini deeskirpsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/product.png','KOMINFO BALI','2021-02-27 08:57:27','2021-03-31 13:11:18','2021-03-31 13:11:18'),
-(4,'SISIK','ini deskripsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/nayeon.jpg','KOMINFO BALI','2021-03-05 03:31:46','2021-03-31 13:11:25','2021-03-31 13:11:25'),
-(5,'SISAKTI','ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi\r\nini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi\r\nini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi\r\nini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/Screenshot (586).png','MEDIKBUD','2021-03-05 04:42:00','2021-03-31 13:11:21','2021-03-31 13:11:21'),
-(6,'SIMPEDAS','Indo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','assets/image/project/Screenshot (284).png','Universitas Udayana','2021-03-26 13:52:22','2021-03-26 13:53:02','2021-03-26 13:53:02'),
-(7,'SRUTI','Sistem informasi universitas terintegrasi Single Sign On (SSO)','Single Sign On (SSO) integrated university information system','assets/image/project/sruti.png','-','2021-03-31 16:22:55','2021-03-31 16:22:55',NULL);
+insert  into `tb_project`(`id_project`,`name`,`description`,`description_en`,`image`,`instansi`,`status_home`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,'Sidik2','ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi','Edited Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','assets/image/project/tele.png','MEDIKBUD',NULL,'2021-02-27 08:12:32','2021-03-31 13:11:15','2021-03-31 13:11:15'),
+(2,'SIKOP','ini deskirpsi ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi  ini deskirpsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/product.png',NULL,NULL,'2021-02-27 08:56:32','2021-02-27 08:57:09','2021-02-27 08:57:09'),
+(3,'SIKOP','ini deeskirpsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/product.png','KOMINFO BALI',NULL,'2021-02-27 08:57:27','2021-03-31 13:11:18','2021-03-31 13:11:18'),
+(4,'SISIK','ini deskripsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/nayeon.jpg','KOMINFO BALI',NULL,'2021-03-05 03:31:46','2021-03-31 13:11:25','2021-03-31 13:11:25'),
+(5,'SISAKTI','ini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi\r\nini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi\r\nini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi\r\nini deskripsi ini deskripsi ini deskripsi ini deskripsi ini deskripsi','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','assets/image/project/Screenshot (586).png','MEDIKBUD',NULL,'2021-03-05 04:42:00','2021-03-31 13:11:21','2021-03-31 13:11:21'),
+(6,'SIMPEDAS','Indo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','assets/image/project/Screenshot (284).png','Universitas Udayana',NULL,'2021-03-26 13:52:22','2021-03-26 13:53:02','2021-03-26 13:53:02'),
+(7,'SRUTI','Sistem informasi universitas terintegrasi Single Sign On (SSO)','Single Sign On (SSO) integrated university information system','assets/image/project/sruti.png','-',1,'2021-03-31 16:22:55','2021-05-06 17:46:00',NULL);
 
 /*Table structure for table `tb_project_trial` */
 
@@ -454,6 +552,29 @@ insert  into `tb_submenu`(`id_submenu`,`name`,`id_menu`,`id_page`,`url`,`created
 (1,'Sub Menu 1',1,2,NULL,'2021-04-05 08:16:12','2021-04-05 09:46:29','2021-04-05 09:46:29'),
 (2,'Sub Menu 2',6,2,NULL,'2021-04-05 08:20:39','2021-04-22 14:23:25','2021-04-22 14:23:25'),
 (3,'submenu 3',8,NULL,'https://www.laksitastartup.com/','2021-04-10 11:02:30','2021-04-22 14:23:43','2021-04-22 14:23:43');
+
+/*Table structure for table `tb_team` */
+
+DROP TABLE IF EXISTS `tb_team`;
+
+CREATE TABLE `tb_team` (
+  `id_team` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `department` varchar(50) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_team`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tb_team` */
+
+insert  into `tb_team`(`id_team`,`name`,`department`,`image`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,'Bayu Suarnata','CTO','assets/image/team/Lambang_Kabupaten_Badung.png','2021-05-07 03:33:47','2021-05-07 03:40:55',NULL),
+(3,'Suarnata','Manager Project','assets/image/team/Lambang_Kabupaten_Badung1.png','2021-05-07 03:41:36','2021-05-07 03:41:36',NULL),
+(4,'Putu Bayu','Senior Programmer','assets/image/team/6094ba36f38baLambang_Kabupaten_Badung.png','2021-05-07 03:55:34','2021-05-07 03:55:34',NULL),
+(6,'Bayu','CEO','assets/image/team/6094bc35d3c27Lambang_Kabupaten_Badung.png','2021-05-07 03:41:11','2021-05-07 04:04:05',NULL);
 
 /*Table structure for table `users` */
 

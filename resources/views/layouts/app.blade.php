@@ -64,9 +64,16 @@
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="{{route('product')}}">
-          <i class="fas fa-fw fa-tasks"></i>
-          <span>Product</span></a>
+          <a class="nav-link collapsed" href="{{route('product')}}" data-toggle="collapse" data-target="#productcollapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-tasks"></i>
+            <span>Product</span></a>
+            <div id="productcollapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">News Component:</h6>
+                <a class="collapse-item" href="{{route('instansi')}}">Instansi</a>
+                <a class="collapse-item" href="{{route('product')}}">Product</a>
+              </div>
+            </div>  
       </li>
 
       <!-- Nav Item - Project -->
@@ -106,6 +113,19 @@
               <a class="collapse-item" href="{{route('page')}}">Page</a>
               <a class="collapse-item" href="{{route('menu')}}">Menu</a>
               <a class="collapse-item" href="{{route('submenu')}}">Sub Menu</a>
+            </div>
+          </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('blog')}}" data-toggle="collapse" data-target="#AboutcollapsePagesMenu" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-info-circle"></i>
+          <span>About Us</span></a>
+          <div id="AboutcollapsePagesMenu" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Menu Component:</h6>
+              <a class="collapse-item" href="{{route('team')}}">Team</a>
+              <a class="collapse-item" href="{{route('about-us')}}">Preference</a>
             </div>
           </div>
       </li>

@@ -25,6 +25,8 @@ Route::get('/blog/{kategori}', 'FrontendController@blogKategori')->name('blog_ka
 Route::get('/menu/{menu}', 'FrontendController@menu')->name('menu-fe');
 Route::get('/menu/{menu}/{submenu}', 'FrontendController@submenu')->name('submenu-fe');
 Route::get('/changelanguage', 'FrontendController@chageLanguage')->name('changeLanguage');
+Route::get('/product/{product}', 'FrontendController@pageProduct')->name('page-product-fe');
+Route::get('/about-us', 'FrontendController@aboutUs')->name('about-us-fe');
 
 Auth::routes();
 
@@ -34,6 +36,7 @@ Route::post('/admin/product/insert', 'ProductController@insert')->name('product.
 Route::get('/admin/product/{id}/edit', 'ProductController@edit')->name('product.edit');
 Route::put('/admin/product/{id}', 'ProductController@update')->name('product.update');
 Route::delete('/admin/product/{id}', 'ProductController@destroy')->name('product.destroy');
+Route::get('/admin/product/status-home/{id}', 'ProductController@statusHome')->name('product.status-home');
 
 Route::get('/admin/expertise', 'ExpertiseController@index')->name('expertise');
 Route::post('/admin/expertise/store', 'ExpertiseController@store')->name('expertise.store');
@@ -46,6 +49,7 @@ Route::post('/admin/project/store', 'ProjectController@store')->name('project.st
 Route::get('/admin/project/{id}/edit', 'ProjectController@edit')->name('project.edit');
 Route::put('/admin/project/{id}', 'ProjectController@update')->name('project.update');
 Route::delete('/admin/project/{id}', 'ProjectController@destroy')->name('project.destroy');
+Route::get('/admin/project/status-home/{id}', 'ProjectController@statusHome')->name('project.status-home');
 
 Route::get('/admin/blog', 'BlogController@index')->name('blog');
 Route::get('/admin/blog/create', 'BlogController@create')->name('blog.create');
@@ -110,4 +114,20 @@ Route::get('/admin/user/{id}/edit', 'ManagementUser@edit')->name('user.edit');
 Route::put('/admin/user/{id}', 'ManagementUser@update')->name('user.update');
 Route::delete('/admin/user/{id}', 'ManagementUser@destroy')->name('user.destroy');
 Route::get('/admin/user/type/{id}', 'ManagementUser@typeChange')->name('user.typeChange');
+
+
+Route::get('/admin/instansi', 'InstansiController@index')->name('instansi');
+Route::post('/admin/instansi/insert', 'InstansiController@insert')->name('instansi.insert');
+Route::get('/admin/instansi/{id}/edit', 'InstansiController@edit')->name('instansi.edit');
+Route::put('/admin/instansi/{id}', 'InstansiController@update')->name('instansi.update');
+Route::delete('/admin/instansi/{id}', 'InstansiController@destroy')->name('instansi.destroy');
+
+Route::get('/admin/team', 'TeamController@index')->name('team');
+Route::post('/admin/team/insert', 'TeamController@insert')->name('team.insert');
+Route::get('/admin/team/{id}/edit', 'TeamController@edit')->name('team.edit');
+Route::put('/admin/team/{id}', 'TeamController@update')->name('team.update');
+Route::delete('/admin/team/{id}', 'TeamController@destroy')->name('team.destroy');
+
+Route::get('/admin/about-us', 'AboutUsController@index')->name('about-us');
+Route::post('/admin/about-us/store', 'AboutUsController@store')->name('about-us.store');
 

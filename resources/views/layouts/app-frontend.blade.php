@@ -180,10 +180,19 @@
                                 <h3>Company</h3>
                             </div>
                             <ul class="link-list">
-                                <li><a href="{{route('product-fe')}}">Product</a></li>
-                                <li><a href="{{route('project-fe')}}">Project</a></li>
-                                <li><a href="{{route('demo')}}">Demo Project</a></li>
-                                <li><a href="{{route('news')}}">News</a></li>
+                                @foreach ($menu as $item)
+                                    @php
+                                        $menuname = \App\GlobalFunction::spaceChange(1,$item->name);
+                                        if($item->id_page){
+                                            $href = route('menu-fe',$menuname);
+                                        }else{
+                                            $href = $item->url;
+                                        }
+                                    @endphp
+                                        <li><a href="{{$href}}">
+                                            {{$item->name}}
+                                        </a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

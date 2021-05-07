@@ -165,11 +165,11 @@
                 <label for="show-menu-name">Menu Name</label>
                 <input type="text" class="form-control" id="show-menu-name" name="name" value="">
                 </div>
-                <div class="form-group internal-page">
+                <div class="form-group">
                     <label for="show-internal-page">Internal Page</label>
                     <input type="text" class="form-control" id="show-internal-page" name="url" value="">
                 </div>
-                <div class="form-group external-url">
+                <div class="form-group">
                     <label for="show-external-url">External URL</label>
                     <input type="text" class="form-control" id="show-external-url" name="url" value="">
                 </div>
@@ -289,7 +289,7 @@
                     if(status == 'show'){
                         $("#show-menu-name").val(result.menu['name']);
                         $("#show-internal-page").val(result.menu['page']['title']);
-                        $('#show-external-url').val(result.menu['utl']);
+                        $('#show-external-url').val(result.menu['url']);
                         $('#showmenu').modal('show');
                     }else{
                         $("#edit-menu-name").val(result.menu['name']);

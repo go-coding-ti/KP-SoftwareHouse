@@ -46,6 +46,11 @@ class ProjectController extends Controller
         $imageName = $image->getClientOriginalName();
         $project->image = $imageLocation."/".$imageName;
         $image->move($imageLocation, $project->image);
+        if($request->has('status_home')){
+            $project->status_home = 1;
+        }else{
+            $project->status_home = 1;
+        }
         $project->save();
 
         foreach($request->expertise as $id_expertise){
@@ -121,6 +126,22 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $project->delete();
         return redirect(route('project'));
+    }
+
+    public function statusHome($id){
+        $project = Project::find($id);
+        if($project->status_home == 1){
+            $project->status_home = 0;
+            $project->save();
+            $msg = 'Status project now cant see at home page';
+        }else{
+            $project->status_home = 1;
+            $project->save();
+            $msg = 'Status project now can see at home page';
+        }
+        
+
+        return response()->json(['success' => $msg, 'project' => $project]);
     }
 }
 

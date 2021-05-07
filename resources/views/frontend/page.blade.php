@@ -9,6 +9,11 @@
 @endsection
 
 @section('jumbotron')
+        @php
+            if(!$varMenu->name){
+                $varMenu->name = $varMenu->title;
+            }
+        @endphp
     <div id="main-hero" class="hero-body">
         <div class="container has-text-centered">
             <div class="columns is-vcentered pt-80 pb-80">

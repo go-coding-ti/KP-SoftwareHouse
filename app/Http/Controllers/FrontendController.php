@@ -15,6 +15,10 @@ use App\SocialMedia;
 use App\Menu;
 use App\SubMenu;
 use App\Page;
+use App\Instansi;
+use App\DetailInstansi;
+use App\Team;
+use App\AboutUs;
 
 class FrontendController extends Controller
 {
@@ -45,8 +49,15 @@ class FrontendController extends Controller
      */
     public function home(){
         $expertises = Expertise::all();
+        $products = Product::where('status_home',1)->get();
+        $projects = Project::where('status_home',1)->get();
+        $instansiInDetail = DetailInstansi::pluck('id_instansi');
+        $instansis = Instansi::whereIn('id_instansi',$instansiInDetail)->get();
         return view('welcome', ['preference' => $this->preference,
         'expertises' => $expertises,
+        'products' => $products,
+        'projects' => $projects,
+        'instansis' => $instansis,
         'socialmedias' => $this->socialmedias,
         'menu' => $this->menu,
         'submenu' => $this->submenu,
@@ -266,5 +277,38 @@ class FrontendController extends Controller
         }
 
         return back();
+    }
+
+    public function pageProduct($product){
+        $product = GlobalFunction::spaceChange(2,$product);
+        $varProduct =  Product::with('page')->where('title',$product)->first();
+
+        if($varProduct){
+            return view('frontend.page', ['preference' => $this->preference,
+            'varMenu' => $varProduct,
+            'socialmedias' => $this->socialmedias,
+            'menu' => $this->menu,
+            'submenu' => $this->submenu,
+            'language' => $this->language ]);
+    
+        }else{
+            return abort(404);
+        }
+    }
+
+    public function aboutUs(){
+        $instansiInDetail = DetailInstansi::pluck('id_instansi');
+        $instansis = Instansi::whereIn('id_instansi',$instansiInDetail)->get();
+        $teams = Team::all();
+        $aboutUs = AboutUs::first();
+
+        return view('frontend.aboutUs',['preference' => $this->preference,
+        'socialmedias' => $this->socialmedias,
+        'instansis' => $instansis,
+        'aboutUs' => $aboutUs,
+        'teams' => $teams,
+        'menu' => $this->menu,
+        'submenu' => $this->submenu,
+        'language' => $this->language ]);
     }
 }

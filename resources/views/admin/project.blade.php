@@ -3,6 +3,71 @@
 @push('css')
 <link href="{{asset('assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<style>
+      /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+</style>
+
 @endpush
 
 @section('content')
@@ -68,6 +133,7 @@
                     <th>Description</th>
                     <th>Expertise</th>
                     <th>Instansi</th>
+                    <th>Show at Home</th>
                     <th>Option</th>
                   </tr>
                 </thead>
@@ -77,6 +143,7 @@
                     <th>Description</th>
                     <th>Expertise</th>
                     <th>Instansi</th>
+                    <th>Show at Home</th>
                     <th>Option</th>
                   </tr>
                 </tfoot>
@@ -95,6 +162,14 @@
                             <td onclick="show({{$project->id_project}},'show')">{{$description}}.....</td>
                             <td onclick="show({{$project->id_project}},'show')">{{$exp}}</td>
                             <td onclick="show({{$project->id_project}},'show')">{{$project->instansi}}</td>
+                            <td>
+                              <label class="switch">
+                                <input type="checkbox" id="checkbox{{$project->id_project}}" onchange="change({{$project->id_project}})" @if ($project->status_home == 1)
+                                    checked
+                                @endif>
+                                <span class="slider round"></span>
+                              </label>
+                            </td>
                             <td><button type="button" class="btn btn-primary btn-sm" onclick="show({{$project->id_project}},'show')"><i class="fas fa-eye"></i></button>
                                 <button type="button" class="btn btn-warning btn-sm" onclick="show({{$project->id_project}},'edit')"><i class="fas fa-pen"></i></button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="deleteProject({{$project->id_project}})"><i class="fas fa-trash"></i></button></td>
@@ -151,6 +226,13 @@
                 <div class="form-group">
                     <label for="project-image">Project Image</label>
                     <input type="file" class="form-control-file" id="project-image" name="image">
+                </div>
+                <div class="form-group">
+                  <label for="check-home">Show at Home Page</label>  
+                  <label class="switch">
+                      <input type="checkbox" name="status_home">
+                      <span class="slider round"></span>
+                  </label>                
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -339,6 +421,25 @@
     function deleteProject(id){
         $("#form-delete-project").attr("action", "project/"+id);
         $('#deleteProject').modal('show');
+    }
+
+    function change(id){
+      var cnf = confirm('Are you sure want to change status at home page?');
+        if(cnf == true){
+            jQuery.ajax({
+                url: "/admin/project/status-home/"+id,
+                method: 'get',
+                success: function(result){
+                    alert(result['success']);
+                }
+            });
+        }else{
+            if(document.getElementById("checkbox"+id).checked == false){
+              document.getElementById("checkbox"+id).checked = true;
+            }else{
+              document.getElementById("checkbox"+id).checked = false;
+            }  
+        }
     }
 </script>
 

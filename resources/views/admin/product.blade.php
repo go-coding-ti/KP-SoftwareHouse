@@ -2,6 +2,72 @@
 
 @push('css')
 <link href="{{asset('assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<style>
+      /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+</style>
+
 @endpush
 
 @section('content')
@@ -66,6 +132,8 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>URL</th>
+                    <th>Internal Page</th>
+                    <th>Show at Home</th>
                     <th>Option</th>
                   </tr>
                 </thead>
@@ -74,6 +142,8 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>URL</th>
+                    <th>Internal Page</th>
+                    <th>Show at Home</th>
                     <th>Option</th>
                   </tr>
                 </tfoot>
@@ -89,6 +159,17 @@
                             <td onclick="show({{$product->id_product}},'show')">{{$url}}@if (strlen($product->ulr) > 35)
                                 ......
                             @endif</td>
+                            <td onclick="show({{$product->id_product}},'show')">@if ($product->id_page)
+                                {{$product->page->title}} 
+                            @endif</td>
+                            <td>
+                              <label class="switch">
+                                <input type="checkbox" id="checkbox{{$product->id_product}}" onchange="change({{$product->id_product}})" @if ($product->status_home == 1)
+                                    checked
+                                @endif>
+                                <span class="slider round"></span>
+                              </label>
+                            </td>
                             <td><button type="button" class="btn btn-primary btn-sm" onclick="show({{$product->id_product}},'show')"><i class="fas fa-eye"></i></button>
                                 <button type="button" class="btn btn-warning btn-sm" onclick="show({{$product->id_product}},'edit')"><i class="fas fa-pen"></i></button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="deleteProduct({{$product->id_product}})"><i class="fas fa-trash"></i></button></td>
@@ -122,21 +203,62 @@
                   <label for="product-name">Product Name</label>
                   <input type="text" class="form-control" id="product-name" name="title" value="{{old('title')}}">
                 </div>
-                <div class="form-group">
-                    <label for="product-url">Product URL</label>
-                    <input type="text" class="form-control" id="product-url" name="url" value="{{old('url')}}">
-                  </div>
+                <div class="form-group internal-page">
+                    <label for="show-internal-page">Internal Page</label>
+                    <input type="text" class="form-control" id="show-internal-page" name="url" value="">
+                </div>
+                <div class="form-group external-url">
+                    <label for="show-external-url">External URL</label>
+                    <input type="text" class="form-control" id="show-external-url" name="url" value="">
+                </div>
                 <div class="form-group">
                   <label for="product-description">Product Description *ina</label>
-                  <textarea class="form-control" id="product-description" rows="3" name="description" value="{{old('description')}}"></textarea>
+                  <textarea class="form-control" id="product-description" rows="3" name="description">{{old('description')}}</textarea>
                 </div>
                 <div class="form-group">
                   <label for="product-description-eng">Product Description *eng</label>
-                  <textarea class="form-control" id="product-description-eng" rows="3" name="description_en" value="{{old('description_eng')}}"></textarea>
+                  <textarea class="form-control" id="product-description-eng" rows="3" name="description_en">{{old('description_eng')}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="product-image">Product Image</label>
                     <input type="file" class="form-control-file" id="product-image" name="image">
+                </div>
+                <div class="form-group">
+                    <label for="type-url">Type Page</label>
+                    <select class="selectpicker form-control" data-live-search="true" id="type-url" rows="3" name="type_page" value="{{old('type_page')}}">
+                        <option value="">Select Type Page</option>
+                        <option value="1">Internal Page</option>
+                        <option value="2">External URL</option>
+                    </select>
+                </div>
+                <div class="form-group internal-page">
+                    <label for="internal-page">Internal Page</label>
+                    <select class="selectpicker form-control" data-live-search="true" id="internal-page" rows="3" name="id_page" value="{{old('id_page')}}">
+                        @foreach ($pages as $page)
+                            <option value="{{$page->id_page}}">{{$page->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group external-url">
+                    <label for="external-url">External URL</label>
+                    <input type="text" class="form-control" id="external-url" name="url" value="{{old('url')}}">
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Instansi That Use the Product</label>
+                    <select class="selectpicker form-control" multiple data-live-search="true" id="product-instansi" rows="3" name="instansi[]" value="{{old('instansi')}}">
+                      <option value="">Select Instansi</option>
+                        @foreach ($instansis as $instansi)
+                            <option value="{{$instansi->id_instansi}}">{{$instansi->nama_instansi}}</option>
+                        @endforeach
+                    </select>
+                    <label for="new instansi"><a href="{{route('instansi')}}">Manage Instansi</a></label>
+                </div>
+                <div class="form-group">
+                  <label for="check-home">Show at Home Page</label>  
+                  <label class="switch">
+                      <input type="checkbox" name="status_home">
+                      <span class="slider round"></span>
+                  </label>                
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -165,9 +287,13 @@
                   <input type="text" class="form-control" id="show-product-name" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="product-url">Product URL</label>
-                    <input type="text" class="form-control" id="show-product-url" name="url" readonly>
-                  </div>
+                    <label for="show-internal-page">Internal Page</label>
+                    <input type="text" class="form-control" id="show-internal-page" name="url" value="">
+                </div>
+                <div class="form-group">
+                    <label for="show-external-url">External URL</label>
+                    <input type="text" class="form-control" id="show-external-url" name="url" value="">
+                </div>
                 <div class="form-group">
                   <label for="product-description">Product Description *ina</label>
                   <textarea class="form-control" id="show-product-description" rows="3" readonly></textarea>
@@ -175,6 +301,16 @@
                 <div class="form-group">
                   <label for="product-description_eng">Product Description *eng</label>
                   <textarea class="form-control" id="show-product-description_eng" rows="3" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Instansi That Use the Product</label>
+                    <select class="selectpicker form-control" multiple data-live-search="true" id="show-product-instansi" rows="3" name="instansi[]" value="">
+                      <option value="">Select Instansi</option>
+                        @foreach ($instansis as $instansi)
+                            <option value="{{$instansi->id_instansi}}">{{$instansi->nama_instansi}}</option>
+                        @endforeach
+                    </select>
+                    <label for="new instansi"><a href="{{route('instansi')}}">Manage Instansi</a></label>
                 </div>
                 <div class="form-group">
                     <label for="product-image">Product Image</label>
@@ -209,10 +345,6 @@
                   <input type="text" class="form-control" id="edit-product-name" name="title">
                 </div>
                 <div class="form-group">
-                    <label for="product-url">Product URL</label>
-                    <input type="text" class="form-control" id="edit-product-url" name="url">
-                  </div>
-                <div class="form-group">
                   <label for="product-description">Product Description *ina</label>
                   <textarea class="form-control" id="edit-product-description" rows="3" name="description"></textarea>
                 </div>
@@ -223,6 +355,36 @@
                 <div class="form-group">
                     <label for="product-image">Product Image</label>
                     <input type="file" class="form-control-file" id="edit-product-image" name="image">
+                </div>
+                <div class="form-group">
+                    <label for="edit-type-url">Type Page</label>
+                    <select class="selectpicker form-control" data-live-search="true" id="edit-type-url" rows="3" name="type_page" value="">
+                        <option value="">Select Type Page</option>
+                        <option value="1">Internal Page</option>
+                        <option value="2">External URL</option>
+                    </select>
+                </div>
+                <div class="form-group edit-internal-page">
+                    <label for="edit-internal-page">Internal Page</label>
+                    <select class="selectpicker form-control" data-live-search="true" id="edit-internal-page" rows="3" name="id_page" value="">
+                        @foreach ($pages as $page)
+                            <option value="{{$page->id_page}}">{{$page->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group edit-external-url">
+                    <label for="edit-external-url">External URL</label>
+                    <input type="text" class="form-control" id="edit-external-url" name="url" value="">
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Instansi That Use the Product</label>
+                    <select class="selectpicker form-control" multiple data-live-search="true" id="edit-product-instansi" rows="3" name="instansi[]" value="">
+                      <option value="">Select Instansi</option>
+                        @foreach ($instansis as $instansi)
+                            <option value="{{$instansi->id_instansi}}">{{$instansi->nama_instansi}}</option>
+                        @endforeach
+                    </select>
+                    <label for="new instansi"><a href="{{route('instansi')}}">Manage Instansi</a></label>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -270,8 +432,16 @@
 <script src="{{asset('assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('assets/js/demo/datatables-demo.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 <script>
+  $( document ).ready(function(){
+        $('.external-url').hide();
+        $('.internal-page').hide();
+        $('.edit-external-url').hide();
+        $('.edit-internal-page').hide();
+  });
+
     function show(id,status){
         jQuery.ajax({
                 url: "product/"+id+"/edit",
@@ -284,15 +454,24 @@
                         $("#show-product-url").val(result.product['url']);
                         $('#show-product-description').val(result.product['description']);
                         $('#show-product-description_eng').val(result.product['description_en']);
+                        if(result.product['id_page']){
+                          $("#show-internal-page").val(result.product['page']['title']);
+                        }
                         $("#show-product-image").attr("src", "/"+result.product['image']);
+                        $('#show-external-url').val(result.product['url']);
+                        $('#show-product-instansi').val(result['instansi']);
                         $('#showProduct').modal('show');
                     }else{
                         $("#edit-product-name").val(result.product['title']);
                         $("#edit-product-url").val(result.product['url']);
                         $('#edit-product-description').val(result.product['description']);
                         $('#edit-product-description_eng').val(result.product['description_en']);
+                        $("#edit-internal-page").val(result.product['id_page']);
+                        $('#edit-external-url').val(result.product['url']);
+                        $('#edit-product-instansi').val(result['instansi']);
                         $("#edit-form-product").attr("action", "product/"+result.product['id_product']);
                         $('#editProduct').modal('show');
+                        console.log(result.instansi)
                     }                   
                     
                 }
@@ -303,6 +482,53 @@
         $("#form-delete-product").attr("action", "product/"+id);
         $('#deleteProduct').modal('show');
     }
+
+    $('#type-url').change(function(){
+        if($('#type-url').val() == 1){
+            $('.external-url').hide();
+            $('.internal-page').show();
+        }else if($('#type-url').val() == 2){
+            $('.internal-page').hide();
+            $('.external-url').show();
+        }else{
+            $('.internal-page').hide();
+            $('.external-url').hide();
+        }
+    });
+
+    $('#edit-type-url').change(function(){
+        if($('#edit-type-url').val() == 1){
+            $('.edit-external-url').hide();
+            $('.edit-internal-page').show();
+        }else if($('#edit-type-url').val() == 2){
+            $('.edit-internal-page').hide();
+            $('.edit-external-url').show();
+        }else{
+            $('.edit-internal-page').hide();
+            $('.edit-external-url').hide();
+        }
+    });
+
+    function change(id){
+      var cnf = confirm('Are you sure want to change status at home page?');
+        if(cnf == true){
+            jQuery.ajax({
+                url: "/admin/product/status-home/"+id,
+                method: 'get',
+                success: function(result){
+                    alert(result['success']);
+                    console.log(result['product']);
+                }
+            });
+        }else{
+            if(document.getElementById("checkbox"+id).checked == false){
+              document.getElementById("checkbox"+id).checked = true;
+            }else{
+              document.getElementById("checkbox"+id).checked = false;
+            }  
+        }
+    }
+
 </script>
 
 @endsection

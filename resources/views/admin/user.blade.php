@@ -356,7 +356,11 @@
                 }
             });
         }else{
-            document.getElementById("checkbox"+id).checked = false;
+          if(document.getElementById("checkbox"+id).checked == false){
+              document.getElementById("checkbox"+id).checked = true;
+            }else{
+              document.getElementById("checkbox"+id).checked = false;
+            }  
         } 
     }
 </script>
